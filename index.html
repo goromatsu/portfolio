@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tomas風ポートフォリオ</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0f0f0f;
+      color: #f2f2f2;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    header {
+      padding: 2rem;
+      background: #121212;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: #78f2c3;
+      margin: 0;
+    }
+    .links a {
+      margin-left: 1rem;
+      color: #f4a9b8;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+    .section {
+      padding: 2rem;
+    }
+    .project {
+      background: #1a1a1a;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+    }
+    .project img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .project h2 {
+      color: #f77f94;
+      margin-top: 1rem;
+    }
+    .project small {
+      color: #ccc;
+    }
+    .resume-button {
+      background: #f4a9b8;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Goromatsu</h1>
+    <div class="links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#" class="resume-button">Resume ↓</a>
+    </div>
+  </header>
+  <div class="section">
+    <h2>ゲームプログラミング</h2>
+
+    <div class="project">
+      <img src="project1.png" alt="Bug Shooter" />
+      <h2>Bug Shooter (2023)</h2>
+      <small>ゲームプレイプログラマー - SDL2 (C++) - 6 Weeks</small>
+      <p>
+        スペースシューティングというジャンルに挑戦したプロジェクト。独自のECSと波動関数崩壊アルゴリズムを背景生成器として使用。
+      </p>
+    </div>
+
+    <div class="project">
+      <img src="project2.png" alt="Bomberbots" />
+      <h2>Bomberbots (2022)</h2>
+      <small>ゲームプレイプログラマー - LÖVE2D (Lua) - 4 Months</small>
+      <p>
+        FutureGamesでのチーム制作。Luaで作られたボンバーマンクローン。
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
