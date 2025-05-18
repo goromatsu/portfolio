@@ -3,54 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ポートフォリオ</title>
+  <title>ゲーム開発者ポートフォリオ</title>
   <style>
     body {
       margin: 0;
       background-color: #0f0f0f;
       color: #f2f2f2;
       font-family: 'Segoe UI', sans-serif;
+      line-height: 1.5;
     }
     header {
-      padding: 2rem;
+      padding: 1.5rem;
       background: #121212;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
     header h1 {
       color: #78f2c3;
       margin: 0;
+      font-size: 1.8rem;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
     }
     .links a {
-      margin-left: 1rem;
+      margin-right: 1rem;
       color: #f4a9b8;
       text-decoration: none;
-      font-size: 1.2rem;
-    }
-    .section {
-      padding: 2rem;
-    }
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    .project {
-      background: #1a1a1a;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    .project img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    .project h2 {
-      color: #f77f94;
-      margin-top: 1rem;
-    }
-    .project small {
-      color: #ccc;
+      font-size: 1rem;
     }
     .resume-button {
       background: #f4a9b8;
@@ -60,6 +44,67 @@
       color: #000;
       text-decoration: none;
       font-weight: bold;
+    }
+    .section {
+      padding: 2rem 1rem;
+    }
+    .section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .project {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+    .project img {
+      width: 100%;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    .project h2 {
+      color: #f77f94;
+      margin: 0.75rem 0 0.5rem;
+      font-size: 1.2rem;
+    }
+    .project small {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+    .project p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      flex-grow: 1;
+    }
+    /* スマホ対応 */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+      .links a {
+        margin-right: 0.75rem;
+        font-size: 0.9rem;
+      }
+      .section {
+        padding: 1rem;
+      }
+      .project h2 {
+        font-size: 1.1rem;
+      }
+      .project small, .project p {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -76,21 +121,40 @@
     <h2>ゲームプログラミング</h2>
     <div class="project-grid">
       <div class="project">
-        <img src="project1.png" alt="Test" />
-        <h2>Test</h2>
-        <small>test</small>
-        <p>
-          Test
-        </p>
+        <img src="project1.png" alt="サンプルプロジェクトA" />
+        <h2>サンプルプロジェクトA (2023)</h2>
+        <small>Unity (C#) - 2ヶ月</small>
+        <p>基本的な3Dアクションのプロトタイプ。移動とカメラ制御を実装。</p>
       </div>
-
       <div class="project">
-        <img src="project2.png" alt="Test2" />
-        <h2>Test2</h2>
-        <small>test2</small>
-        <p>
-          Test2
-        </p>
+        <img src="project2.png" alt="サンプルプロジェクトB" />
+        <h2>サンプルプロジェクトB (2022)</h2>
+        <small>Godot (GDScript) - 3ヶ月</small>
+        <p>2Dプラットフォーマーのデモ。アニメーションと衝突判定を実装。</p>
+      </div>
+      <div class="project">
+        <img src="project3.png" alt="サンプルプロジェクトC" />
+        <h2>サンプルプロジェクトC (2024)</h2>
+        <small>Unreal Engine 5 (Blueprint) - 1ヶ月</small>
+        <p>フォトリアルな環境でのウォークスルーデモ。ライティングを調整。</p>
+      </div>
+      <div class="project">
+        <img src="project4.png" alt="サンプルプロジェクトD" />
+        <h2>サンプルプロジェクトD (2021)</h2>
+        <small>HTML5 / JavaScript - 4週間</small>
+        <p>ブラウザゲームのミニゲーム。スコアシステムとレスポンシブ対応。</p>
+      </div>
+      <div class="project">
+        <img src="project5.png" alt="サンプルプロジェクトE" />
+        <h2>サンプルプロジェクトE (2020)</h2>
+        <small>Python / Pygame - 6週間</small>
+        <p>サイドスクロールシューティング。シンプルな敵AIを実装。</p>
+      </div>
+      <div class="project">
+        <img src="project6.png" alt="サンプルプロジェクトF" />
+        <h2>サンプルプロジェクトF (2019)</h2>
+        <small>C++ / SDL2 - 3ヶ月</small>
+        <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
       </div>
     </div>
   </div>
