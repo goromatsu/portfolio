@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ゲーム開発者ポートフォリオ</title>
   <style>
+    /* 全体設定 */
     body {
       margin: 0;
       background-color: #0f0f0f;
@@ -64,10 +65,18 @@
       display: flex;
       flex-direction: column;
     }
+    /* 画像のパス例: images/project1.png */
     .project img {
       width: 100%;
       border-radius: 5px;
       object-fit: cover;
+      /* アニメーション適用 */
+      animation: fadeInUp 0.8s ease-out both;
+      transition: transform 0.3s;
+    }
+    /* ホバー時に拡大 */
+    .project img:hover {
+      transform: scale(1.05);
     }
     .project h2 {
       color: #f77f94;
@@ -82,6 +91,17 @@
       margin-top: 0.5rem;
       font-size: 0.95rem;
       flex-grow: 1;
+    }
+    /* キーフレーム定義（フェードイン＆上に浮き上がる） */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     /* スマホ対応 */
     @media (max-width: 600px) {
@@ -121,37 +141,37 @@
     <h2>ゲームプログラミング</h2>
     <div class="project-grid">
       <div class="project">
-        <img src="project1.png" alt="サンプルプロジェクトA" />
+        <img src="images/project_1.jpg" alt="サンプルプロジェクトA" />
         <h2>サンプルプロジェクトA (2023)</h2>
         <small>Unity (C#) - 2ヶ月</small>
         <p>基本的な3Dアクションのプロトタイプ。移動とカメラ制御を実装。</p>
       </div>
       <div class="project">
-        <img src="project2.png" alt="サンプルプロジェクトB" />
+        <img src="images/project_2.jpg" alt="サンプルプロジェクトB" />
         <h2>サンプルプロジェクトB (2022)</h2>
         <small>Godot (GDScript) - 3ヶ月</small>
         <p>2Dプラットフォーマーのデモ。アニメーションと衝突判定を実装。</p>
       </div>
       <div class="project">
-        <img src="project3.png" alt="サンプルプロジェクトC" />
+        <img src="images/project_3.jpg" alt="サンプルプロジェクトC" />
         <h2>サンプルプロジェクトC (2024)</h2>
         <small>Unreal Engine 5 (Blueprint) - 1ヶ月</small>
         <p>フォトリアルな環境でのウォークスルーデモ。ライティングを調整。</p>
       </div>
       <div class="project">
-        <img src="project4.png" alt="サンプルプロジェクトD" />
+        <img src="images/project_4.jpg" alt="サンプルプロジェクトD" />
         <h2>サンプルプロジェクトD (2021)</h2>
         <small>HTML5 / JavaScript - 4週間</small>
         <p>ブラウザゲームのミニゲーム。スコアシステムとレスポンシブ対応。</p>
       </div>
       <div class="project">
-        <img src="project5.png" alt="サンプルプロジェクトE" />
+        <img src="images/project_5.jpg" alt="サンプルプロジェクトE" />
         <h2>サンプルプロジェクトE (2020)</h2>
         <small>Python / Pygame - 6週間</small>
         <p>サイドスクロールシューティング。シンプルな敵AIを実装。</p>
       </div>
       <div class="project">
-        <img src="project6.png" alt="サンプルプロジェクトF" />
+        <img src="images/project_6.jpg" alt="サンプルプロジェクトF" />
         <h2>サンプルプロジェクトF (2019)</h2>
         <small>C++ / SDL2 - 3ヶ月</small>
         <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
