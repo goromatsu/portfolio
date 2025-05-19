@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ゲーム開発者ポートフォリオ</title>
   <style>
     body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.5; }
     header {
       padding:1.5rem;
-      background:#0f0f0f;
+      background:#121212;
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -40,6 +40,9 @@
     .project h2 { color:#007ACC; margin:0.75rem 0 0.5rem; font-size:1.2rem; }
     .project small { color:#ccc; font-size:0.9rem; }
     .project p { margin-top:0.5rem; font-size:0.95rem; flex-grow:1; }
+    /* 技術タグ */
+    .tech-tags { margin-top:1rem; }
+    .tech-tag { display:inline-block; border:1px solid #78f2c3; border-radius:4px; padding:0.25rem 0.5rem; margin:0.25rem; font-size:0.9rem; color:#78f2c3; }
     @media (max-width:900px) { .project-grid { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:600px) {
       .project-grid { grid-template-columns:1fr; }
@@ -64,15 +67,13 @@
   <div class="section">
     <h2>ゲーム開発者ポートフォリオ</h2>
     <div class="project-grid">
+      <!-- 各プロジェクト要素 -->
       <!-- プロジェクト1 -->
       <a href="detail.html?id=1" class="project-link">
         <div class="project">
           <div class="media-container">
             <img src="images/project_1.jpg" alt="プロジェクトA サムネイル">
-            <iframe
-              src="https://www.youtube.com/embed/YOUTUBE_ID_1?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_1&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_1?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_1&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトA (2023)</h2>
           <small>Unity (C#) - 2ヶ月</small>
@@ -84,10 +85,7 @@
         <div class="project">
           <div class="media-container">
             <img src="images/project_2.jpg" alt="プロジェクトB サムネイル">
-            <iframe
-              src="https://www.youtube.com/embed/YOUTUBE_ID_2?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_2&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_2?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_2&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトB (2022)</h2>
           <small>Godot (GDScript) - 3ヶ月</small>
@@ -99,10 +97,7 @@
         <div class="project">
           <div class="media-container">
             <img src="images/project_3.jpg" alt="プロジェクトC サムネイル">
-            <iframe
-              src="https://www.youtube.com/embed/YOUTUBE_ID_3?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_3&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_3?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_3&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトC (2024)</h2>
           <small>Unreal Engine 5 (Blueprint) - 1ヶ月</small>
@@ -114,10 +109,7 @@
         <div class="project">
           <div class="media-container">
             <img src="images/project_4.jpg" alt="プロジェクトD サムネイル">
-            <iframe
-              src="https://www.youtube.com/embed/YOUTUBE_ID_4?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_4&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_4?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_4&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトD (2021)</h2>
           <small>HTML5 / JavaScript - 4週間</small>
@@ -129,10 +121,7 @@
         <div class="project">
           <div class="media-container">
             <img src="images/project_5.jpg" alt="プロジェクトE サムネイル">
-            <iframe
-              src="https://www.youtube.com/embed/YOUTUBE_ID_5?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_5&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_5?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_5&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトE (2020)</h2>
           <small>Python / Pygame - 6週間</small>
@@ -144,16 +133,29 @@
         <div class="project">
           <div class="media-container">
             <img src="images/project_6.jpg" alt="プロジェクトF サムネイル">
-            <iframe
-              src="https://www.youtube.com/embed/YOUTUBE_ID_6?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_6&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_6?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_6&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトF (2019)</h2>
           <small>C++ / SDL2 - 3ヶ月</small>
           <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
         </div>
       </a>
+    </div>
+    <!-- 技術要素セクション -->
+    <div class="section tech-section">
+      <h2>技術経験</h2>
+      <div class="tech-tags">
+        <span class="tech-tag">UEFN</span>
+        <span class="tech-tag">Verse</span>
+        <span class="tech-tag">Unreal Engine</span>
+        <span class="tech-tag">Godot</span>
+        <span class="tech-tag">Unity</span>
+        <span class="tech-tag">C</span>
+        <span class="tech-tag">C++</span>
+        <span class="tech-tag">C#</span>
+        <span class="tech-tag">GdScript</span>
+        <span class="tech-tag">Git</span>
+      </div>
     </div>
   </div>
 </body>
