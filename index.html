@@ -5,17 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ゲーム開発者ポートフォリオ</title>
   <style>
-    body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.5; }
+    body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.5;}
     header {
-      padding:1.5rem;
-      background:#121212;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      flex-wrap:wrap;
-      margin: 0 auto;
-      max-width: 960px;
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 100%;
+      max-width: 960px;
+      z-index: 1000;
+      background: #0f0f0f;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
     header h1 { color:#78f2c3; margin:0; font-size:1.8rem; }
     .links { display:flex; flex-wrap:wrap; margin-top:0.5rem; }
@@ -25,7 +29,7 @@
     .section h2 { font-size:1.6rem; margin-bottom:1rem; }
     .project-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
     .project-link { text-decoration:none; color:inherit; }
-    .project { background:#1a1a1a; padding:1rem; border-radius:8px; display:flex; flex-direction:column; transition:transform 0.2s; }
+    .project { background:#0f0f0f; padding:1rem; border-radius:8px; display:flex; flex-direction:column; transition:transform 0.2s; }
     .project:hover { transform:translateY(-4px); }
     .media-container { position:relative; width:100%; padding-top:56.25%; overflow:hidden; border-radius:5px; }
     .media-container img,
@@ -38,7 +42,9 @@
     .project:hover .media-container iframe { opacity:1; }
     .project:hover .media-container img { opacity:0; }
     .project h2 { color:#007ACC; margin:0.75rem 0 0.5rem; font-size:1.2rem; }
-    .project small { color:#ccc; font-size:0.9rem; }
+    .project small { color:#ccc; font-size:0.7rem; display: flex; gap: 0.5rem;}
+    .project small .tools::before {content: '🛠️';}
+    .project small .duration::before {content: '⏳';}
     .project p { margin-top:0.5rem; font-size:0.95rem; flex-grow:1; }
     /* 技術タグ */
     .tech-tags { margin-top:1rem; }
@@ -59,8 +65,8 @@
   <header>
     <h1>Goromatsu</h1>
     <div class="links">
-      <a href="#">GitHub</a>
-      <a href="#">LinkedIn</a>
+      <a href="https://x.com/_goromatsu">X</a>
+      <a href="https://github.com/goromatsu">GitHub</a>
       <a href="#" class="resume-button">Resume ↓</a>
     </div>
   </header>
@@ -76,7 +82,10 @@
             <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_1?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_1&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトA (2023)</h2>
-          <small>Unity (C#) - 2ヶ月</small>
+          <small>
+            <span class="tools">UEFN (Verse)</span>
+            <span class="duration">2週間</span>
+          </small>
           <p>基本的な3Dアクションのプロトタイプ。移動とカメラ制御を実装。</p>
         </div>
       </a>
@@ -87,8 +96,11 @@
             <img src="images/project_2.jpg" alt="プロジェクトB サムネイル">
             <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_2?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_2&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
-          <h2>サンプルプロジェクトB (2022)</h2>
-          <small>Godot (GDScript) - 3ヶ月</small>
+          <h2>サンプルプロジェクトB (2022)</h2>          
+          <small>
+            <span class="tools">UEFN (Verse)</span>
+            <span class="duration">2週間</span>
+          </small>
           <p>2Dプラットフォーマーのデモ。アニメーションと衝突判定を実装。</p>
         </div>
       </a>
@@ -100,7 +112,10 @@
             <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_3?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_3&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトC (2024)</h2>
-          <small>Unreal Engine 5 (Blueprint) - 1ヶ月</small>
+          <small>
+            <span class="tools">UEFN (Verse)</span>
+            <span class="duration">2週間</span>
+          </small>
           <p>フォトリアルな環境でのウォークスルーデモ。ライティングを調整。</p>
         </div>
       </a>
@@ -112,7 +127,10 @@
             <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_4?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_4&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
           <h2>サンプルプロジェクトD (2021)</h2>
-          <small>HTML5 / JavaScript - 4週間</small>
+          <small>
+            <span class="tools">UEFN (Verse)</span>
+            <span class="duration">1週間</span>
+          </small>
           <p>ブラウザゲームのミニゲーム。スコアシステムとレスポンシブ対応。</p>
         </div>
       </a>
@@ -123,8 +141,11 @@
             <img src="images/project_5.jpg" alt="プロジェクトE サムネイル">
             <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_5?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_5&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
-          <h2>サンプルプロジェクトE (2020)</h2>
-          <small>Python / Pygame - 6週間</small>
+          <h2>サンプルプロジェクトE (2020)</h2>          
+          <small>
+            <span class="tools">UEFN (Verse)</span>
+            <span class="duration">2週間</span>
+          </small>
           <p>サイドスクロールシューティング。シンプルな敵AIを実装。</p>
         </div>
       </a>
@@ -135,8 +156,11 @@
             <img src="images/project_6.jpg" alt="プロジェクトF サムネイル">
             <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_6?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_6&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
-          <h2>サンプルプロジェクトF (2019)</h2>
-          <small>C++ / SDL2 - 3ヶ月</small>
+          <h2>サンプルプロジェクトF (2019)</h2>         
+          <small>
+            <span class="tools">UEFN (Verse)</span>
+            <span class="duration">2日</span>
+          </small>
           <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
         </div>
       </a>
