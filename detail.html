@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プロジェクト詳細 | Goromatsu ポートフォリオ</title>
+  <style>
+    body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.6; }
+    header {
+      margin: 0 auto;
+      max-width: 960px;
+      width: 100%;
+      background:#121212;
+      padding:1rem 1.5rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    header h1 { margin:0; color:#78f2c3; font-size:1.5rem; }
+    header a { color:#3794FF; text-decoration:none; font-size:1rem; }
+    .detail-container {
+      max-width:960px;
+      margin:2rem auto;
+      padding:0 1rem;
+      display:flex;
+      flex-direction:column;
+      gap:2rem;
+    }
+    .video-container {
+      position:relative;
+      width:100%;
+      padding-top:56.25%;
+      background:#111;
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .video-container iframe,
+    .video-container video {
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover;
+    }
+    .info-boxes {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:1rem;
+    }
+    .info-box {
+      background:#1a1a1a;
+      border-radius:6px;
+      padding:0.75rem;
+    }
+    .info-box h3 {
+      margin:0 0 0.4rem;
+      color:#f77f94;
+      font-size:1rem;
+    }
+    .info-box ul {
+      margin:0;
+      padding-left:1rem;
+      color:#ccc;
+      font-size:0.85rem;
+    }
+    .info-box ul li { margin-bottom:0.4rem; }
+    /* プロジェクト概要用テキスト */
+    .info-box p {
+      margin:0;
+      font-size:0.85rem;
+      color:#ccc;
+    }
+    .description-container {
+      background:#0f0f0f;
+      border-radius:6px;
+      padding:1rem;
+    }
+    .description-container h3 {
+      margin:0 0 0.75rem;
+      color:#f77f94;
+      font-size:1.1rem;
+    }
+    .description-container p {
+      margin-bottom:1rem;
+      color:#ccc;
+    }
+    @media (max-width:600px) {
+      header { flex-direction:column; align-items:flex-start; }
+      header a { margin-top:0.5rem; }
+      .detail-container { gap:1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Goromatsu ポートフォリオ</h1>
+    <a href="index.html">← プロジェクト一覧へ戻る</a>
+  </header>
+  <div class="detail-container">
+    <!-- 動画表示エリア -->
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/YOUTUBE_ID?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <!-- プロジェクト情報と概要 -->
+    <div class="info-boxes">
+      <div class="info-box">
+        <h3>プロジェクト情報</h3>
+        <ul>
+          <li>役割: リードプログラマー</li>
+          <li>チームサイズ: 3名</li>
+          <li>制作期間: 4ヶ月</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h3>プロジェクト概要</h3>
+        <p>状況連動型ホラーゲーム「Anomaly 夜警」。監視カメラを駆使して異常を記録し、解析を進めるゲーム体験を提供。</p>
+      </div>
+    </div>
+    <!-- 詳細説明 -->
+    <div class="description-container">
+      <h3>詳細説明</h3>
+      <p>Verse で構築したアノマリー制御ロジックにより、ランダムではなく環境トリガーに応じた異常演出を実現しました。ナイアガラエフェクトで不気味さを強調。</p>
+      <p>UI は Notion モックをもとにデザイン。プレイヤーが情報を直感的に確認できるよう、情報パネルと映像フィードバックを最適配置。</p>
+    </div>
+  </div>
+</body>
+</html>

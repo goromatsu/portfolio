@@ -9,19 +9,20 @@
     header { padding:1.5rem; background:#121212; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
     header h1 { color:#78f2c3; margin:0; font-size:1.8rem; }
     .links { display:flex; flex-wrap:wrap; margin-top:0.5rem; }
-    .links a { margin-right:1rem; color:#f4a9b8; text-decoration:none; font-size:1rem; }
-    .resume-button { background:#f4a9b8; padding:0.5rem 1rem; border:none; border-radius:5px; color:#000; text-decoration:none; font-weight:bold; }
+    .links a { margin-right:1rem; color:#3794FF; text-decoration:none; font-size:1rem; }
+    .resume-button { background:#3794FF; padding:0.5rem 1rem; border:none; border-radius:5px; color:#000; text-decoration:none; font-weight:bold; }
     .section { padding:2rem 1rem; }
     .section h2 { font-size:1.6rem; margin-bottom:1rem; }
     .project-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-    .project { background:#1a1a1a; padding:1rem; border-radius:8px; display:flex; flex-direction:column; }
+    .project-link { text-decoration: none; color: inherit; }
+    .project { background:#1a1a1a; padding:1rem; border-radius:8px; display:flex; flex-direction:column; transition: transform 0.2s; }
+    .project:hover { transform: translateY(-4px); }
     .media-container { position:relative; width:100%; padding-top:56.25%; overflow:hidden; border-radius:5px; }
-    .media-container img,
-    .media-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; transition:opacity 0.3s ease; }
+    .media-container img, .media-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; transition:opacity 0.3s ease; }
     .media-container iframe { opacity:0; pointer-events:none; }
     .project:hover .media-container iframe { opacity:1; }
     .project:hover .media-container img { opacity:0; }
-    .project h2 { color:#f77f94; margin:0.75rem 0 0.5rem; font-size:1.2rem; }
+    .project h2 { color:#007ACC; margin:0.75rem 0 0.5rem; font-size:1.2rem; }
     .project small { color:#ccc; font-size:0.9rem; }
     .project p { margin-top:0.5rem; font-size:0.95rem; flex-grow:1; }
     @media (max-width:900px) { .project-grid { grid-template-columns:repeat(2,1fr); } }
@@ -48,83 +49,95 @@
     <h2>ゲーム開発者ポートフォリオ</h2>
     <div class="project-grid">
       <!-- プロジェクト1 -->
-      <div class="project">
-        <div class="media-container">
-          <img src="images/project_1.jpg" alt="プロジェクトA サムネイル">
-          <iframe
-            src="https://www.youtube.com/embed/YOUTUBE_ID_1?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_1&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
+      <a href="detail.html" class="project-link">
+        <div class="project">
+          <div class="media-container">
+            <img src="images/project_1.jpg" alt="プロジェクトA サムネイル">
+            <iframe
+              src="https://www.youtube.com/embed/YOUTUBE_ID_1?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_1&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <h2>サンプルプロジェクトA (2023)</h2>
+          <small>Unity (C#) - 2ヶ月</small>
+          <p>基本的な3Dアクションのプロトタイプ。移動とカメラ制御を実装。</p>
         </div>
-        <h2>サンプルプロジェクトA (2023)</h2>
-        <small>Unity (C#) - 2ヶ月</small>
-        <p>基本的な3Dアクションのプロトタイプ。移動とカメラ制御を実装。</p>
-      </div>
+      </a>
       <!-- プロジェクト2 -->
-      <div class="project">
-        <div class="media-container">
-          <img src="images/project_2.jpg" alt="プロジェクトB サムネイル">
-          <iframe
-            src="https://www.youtube.com/embed/YOUTUBE_ID_2?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_2&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
+      <a href="detail.html" class="project-link">
+        <div class="project">
+          <div class="media-container">
+            <img src="images/project_2.jpg" alt="プロジェクトB サムネイル">
+            <iframe
+              src="https://www.youtube.com/embed/YOUTUBE_ID_2?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_2&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <h2>サンプルプロジェクトB (2022)</h2>
+          <small>Godot (GDScript) - 3ヶ月</small>
+          <p>2Dプラットフォーマーのデモ。アニメーションと衝突判定を実装。</p>
         </div>
-        <h2>サンプルプロジェクトB (2022)</h2>
-        <small>Godot (GDScript) - 3ヶ月</small>
-        <p>2Dプラットフォーマーのデモ。アニメーションと衝突判定を実装。</p>
-      </div>
+      </a>
       <!-- プロジェクト3 -->
-      <div class="project">
-        <div class="media-container">
-          <img src="images/project_3.jpg" alt="プロジェクトC サムネイル">
-          <iframe
-            src="https://www.youtube.com/embed/YOUTUBE_ID_3?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_3&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
+      <a href="detail.html" class="project-link">
+        <div class="project">
+          <div class="media-container">
+            <img src="images/project_3.jpg" alt="プロジェクトC サムネイル">
+            <iframe
+              src="https://www.youtube.com/embed/YOUTUBE_ID_3?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_3&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <h2>サンプルプロジェクトC (2024)</h2>
+          <small>Unreal Engine 5 (Blueprint) - 1ヶ月</small>
+          <p>フォトリアルな環境でのウォークスルーデモ。ライティングを調整。</p>
         </div>
-        <h2>サンプルプロジェクトC (2024)</h2>
-        <small>Unreal Engine 5 (Blueprint) - 1ヶ月</small>
-        <p>フォトリアルな環境でのウォークスルーデモ。ライティングを調整。</p>
-      </div>
+      </a>
       <!-- プロジェクト4 -->
-      <div class="project">
-        <div class="media-container">
-          <img src="images/project_4.jpg" alt="プロジェクトD サムネイル">
-          <iframe
-            src="https://www.youtube.com/embed/YOUTUBE_ID_4?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_4&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
+      <a href="detail.html" class="project-link">
+        <div class="project">
+          <div class="media-container">
+            <img src="images/project_4.jpg" alt="プロジェクトD サムネイル">
+            <iframe
+              src="https://www.youtube.com/embed/YOUTUBE_ID_4?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_4&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <h2>サンプルプロジェクトD (2021)</h2>
+          <small>HTML5 / JavaScript - 4週間</small>
+          <p>ブラウザゲームのミニゲーム。スコアシステムとレスポンシブ対応。</p>
         </div>
-        <h2>サンプルプロジェクトD (2021)</h2>
-        <small>HTML5 / JavaScript - 4週間</small>
-        <p>ブラウザゲームのミニゲーム。スコアシステムとレスポンシブ対応。</p>
-      </div>
+      </a>
       <!-- プロジェクト5 -->
-      <div class="project">
-        <div class="media-container">
-          <img src="images/project_5.jpg" alt="プロジェクトE サムネイル">
-          <iframe
-            src="https://www.youtube.com/embed/shHP2J7KY-o?autoplay=1&mute=1&loop=1&playlist=shHP2J7KY-o&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
+      <a href="detail.html" class="project-link">
+        <div class="project">
+          <div class="media-container">
+            <img src="images/project_5.jpg" alt="プロジェクトE サムネイル">
+            <iframe
+              src="https://www.youtube.com/embed/YOUTUBE_ID_5?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_5&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <h2>サンプルプロジェクトE (2020)</h2>
+          <small>Python / Pygame - 6週間</small>
+          <p>サイドスクロールシューティング。シンプルな敵AIを実装。</p>
         </div>
-        <h2>サンプルプロジェクトE (2020)</h2>
-        <small>Python / Pygame - 6週間</small>
-        <p>サイドスクロールシューティング。シンプルな敵AIを実装。</p>
-      </div>
+      </a>
       <!-- プロジェクト6 -->
-      <div class="project">
-        <div class="media-container">
-          <img src="images/project_6.jpg" alt="プロジェクトF サムネイル">
-          <iframe
-            src="https://www.youtube.com/embed/YOUTUBE_ID_6?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_6&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
+      <a href="detail.html" class="project-link">
+        <div class="project">
+          <div class="media-container">
+            <img src="images/project_6.jpg" alt="プロジェクトF サムネイル">
+            <iframe
+              src="https://www.youtube.com/embed/YOUTUBE_ID_6?autoplay=1&mute=1&loop=1&playlist=YOUTUBE_ID_6&playsinline=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <h2>サンプルプロジェクトF (2019)</h2>
+          <small>C++ / SDL2 - 3ヶ月</small>
+          <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
         </div>
-        <h2>サンプルプロジェクトF (2019)</h2>
-        <small>C++ / SDL2 - 3ヶ月</small>
-        <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
-      </div>
+      </a>
     </div>
   </div>
 </body>
