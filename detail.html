@@ -3,188 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>プロジェクト詳細 | Goromatsu</title>
+  <title>プロジェクト詳細 | Goromatsu ポートフォリオ</title>
   <style>
-    body {
-      margin: 0;
-      background: #0f0f0f;
-      color: #f2f2f2;
-      font-family: 'Segoe UI', sans-serif;
-      line-height: 1.6;
-    }
-    header {
-      margin: 0 auto;
-      max-width: 960px;
-      width: 100%;
-      background: #0f0f0f;
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    header h1 {
-      margin: 0;
-      color: #78f2c3;
-      font-size: 1.5rem;
-    }
-    header a {
-      color: #3794FF;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    .detail-container {
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      background: #111;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .video-container iframe,
-    .video-container video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .info-boxes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .info-box {
-      background: #1a1a1a;
-      border-radius: 6px;
-      padding: 0.75rem;
-    }
-    .info-box h3 {
-      margin: 0 0 0.4rem;
-      color: #78f2c3;
-      font-size: 1rem;
-    }
-    .info-box ul {
-      margin: 0;
-      padding-left: 1rem;
-      color: #ccc;
-      font-size: 0.85rem;
-    }
-    .info-box ul li {
-      margin-bottom: 0.4rem;
-    }
-    .description-container {
-      background: #0f0f0f;
-      border-radius: 6px;
-      padding: 1rem;
-    }
-    .description-container h3 {
-      margin: 0 0 0.75rem;
-      color: #78f2c3;
-      font-size: 1.1rem;
-    }
-    .description-container p {
-      margin-bottom: 1rem;
-      color: #ccc;
-    }
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      header a {
-        margin-top: 0.5rem;
-      }
-      .detail-container {
-        gap: 1.5rem;
-      }
-    }
+    body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.6; padding-top:5rem; }
+    header { position:fixed; top:0; left:50%; transform:translateX(-50%); background:#121212; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; max-width:960px; width:100%; z-index:1000; }
+    header h1 { margin:0; color:#78f2c3; font-size:1.5rem; }
+    header a { color:#3794FF; text-decoration:none; font-size:1rem; }
+    .detail-container { max-width:960px; margin:2rem auto; padding:0 1rem; display:flex; flex-direction:column; gap:1.5rem; }
+    .video-container { position:relative; width:100%; padding-top:56.25%; background:#111; border-radius:8px; overflow:hidden; }
+    .video-container iframe, .video-container video { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+    .metrics { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .metrics span { background:#f4a9b8; color:#000; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.85rem; }
+    .info-boxes { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
+    .info-box { background:#1a1a1a; border-radius:6px; padding:0.75rem; }
+    .info-box h3 { margin:0 0 0.4rem; color:#78f2c3; font-size:1rem; }
+    .info-box ul { margin:0; padding-left:1rem; color:#ccc; font-size:0.85rem; }
+    .info-box ul li { margin-bottom:0.4rem; }
+    .info-box p { margin:0; color:#ccc; font-size:0.9rem; }
+    @media (max-width:600px) { header { flex-direction:column; align-items:flex-start; } header a { margin-top:0.5rem; } .detail-container { gap:1rem; } }
   </style>
 </head>
 <body>
   <header>
-    <h1>Goromatsu</h1>
+    <h1>Goromatsu ポートフォリオ</h1>
     <a href="index.html">← プロジェクト一覧へ戻る</a>
   </header>
-
   <div class="detail-container">
     <!-- 動画表示エリア -->
-    <div class="video-container" id="videoArea">
-      <!-- JS で埋め込み -->
-    </div>
-
-    <!-- プロジェクト情報と概要 -->
+    <div class="video-container" id="videoArea"></div>
+    <!-- メトリクス -->
+    <div class="metrics" id="metricsArea"></div>
+    <!-- プロジェクト情報・概要・仕様工夫・システム工夫 -->
     <div class="info-boxes">
       <div class="info-box" id="box-info"></div>
       <div class="info-box" id="box-overview"></div>
+      <div class="info-box" id="box-spec"></div>
+      <div class="info-box" id="box-system"></div>
     </div>
-
-    <!-- 詳細説明 -->
-    <div class="description-container" id="box-details"></div>
   </div>
-
   <script>
   (async () => {
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
-    if (!id) {
-      document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">ID が指定されていません</p>';
-      return;
-    }
-
+    if (!id) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">ID が指定されていません</p>'; return; }
     let projects;
-    try {
-      const resp = await fetch('projects.json');
-      projects = await resp.json();
-    } catch (e) {
-      document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">projects.json の読み込みに失敗しました</p>';
-      return;
-    }
-
+    try { const resp = await fetch('projects.json'); projects = await resp.json(); }
+    catch (e) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">projects.json の読み込みに失敗しました</p>'; return; }
     const data = projects.find(p => p.id === id);
-    if (!data) {
-      document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">プロジェクトが見つかりません (id=' + id + ')</p>';
-      return;
-    }
-
+    if (!data) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">プロジェクトが見つかりません (id=' + id + ')</p>'; return; }
     // 動画埋め込み
-    document.getElementById('videoArea').innerHTML = `
-      <iframe
-        src="https://www.youtube.com/embed/${data.videoId}?autoplay=1&mute=1&loop=1&playlist=${data.videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>`;
-
-    // プロジェクト情報
-    document.getElementById('box-info').innerHTML = `
-      <h3>プロジェクト情報</h3>
-      <ul>
-        <li>役割: ${data.role}</li>
-        <li>チームサイズ: ${data.team}</li>
-        <li>制作期間: ${data.duration}</li>
-      </ul>`;
-
+    document.getElementById('videoArea').innerHTML = 
+      `<iframe src="https://www.youtube.com/embed/${data.videoId}?autoplay=1&mute=1&loop=1&playlist=${data.videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    // メトリクス設定
+    const metrics = [];
+    metrics.push(`<span>🛠️ ${data.tech.split(' - ')[0]}</span>`);
+    metrics.push(`<span>⏳ ${data.duration}</span>`);
+    metrics.push(`<span>👥 ${data.team}</span>`);
+    if (data.plays) metrics.push(`<span>🎮 ${data.plays}</span>`);
+    if (data.avgTime) metrics.push(`<span>⏱️ ${data.avgTime}</span>`);
+    document.getElementById('metricsArea').innerHTML = metrics.join('');
+    // プロジェクト情報（役割・チーム・期間・総プレイ数・平均時間）
+    document.getElementById('box-info').innerHTML = 
+      `<h3>プロジェクト情報</h3>
+       <ul>
+         <li>役割: ${data.role}</li>
+         <li>チームサイズ: ${data.team}</li>
+         <li>制作期間: ${data.duration}</li>
+         <li>総プレイ数: ${data.plays || '—'}</li>
+         <li>平均プレイ時間: ${data.avgTime || '—'}</li>
+       </ul>`;
     // 概要
-    document.getElementById('box-overview').innerHTML = `
-      <h3>プロジェクト概要</h3>
-      <p style="color:#ccc;font-size:0.9rem;">${data.overview}</p>`;
-
-    // 詳細説明
-    const detailsBox = document.getElementById('box-details');
-    detailsBox.innerHTML = '<h3>詳細説明</h3>';
-    data.details.forEach(txt => {
-      const p = document.createElement('p');
-      p.textContent = txt;
-      detailsBox.appendChild(p);
-    });
+    document.getElementById('box-overview').innerHTML = `<h3>プロジェクト概要</h3><p>${data.overview}</p>`;
+    // 仕様工夫
+    document.getElementById('box-spec').innerHTML = `<h3>仕様工夫</h3><p>${data.spec || ''}</p>`;
+    // システム工夫
+    document.getElementById('box-system').innerHTML = `<h3>システム工夫</h3><p>${data.system || ''}</p>`;
   })();
   </script>
 </body>
