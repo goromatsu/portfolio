@@ -20,7 +20,7 @@
     .info-box ul { margin:0; padding-left:1rem; color:#ccc; font-size:0.85rem; }
     .info-box ul li { margin-bottom:0.4rem; }
     .info-box p { margin:0; color:#ccc; font-size:0.9rem; }
-    .description-container { background:#1a1a1a; border-radius:6px; padding:1rem; }
+    .description-container { background:#0f0f0f; border-radius:6px; padding:1rem; }
     .description-container h3 { margin:0 0 0.75rem; color:#78f2c3; font-size:1.1rem; }
     .description-container p { margin-bottom:1rem; color:#ccc; font-size:0.9rem; }
     @media (max-width:600px) { header { flex-direction:column; align-items:flex-start; } header a { margin-top:0.5rem; } .detail-container { gap:1rem; } }
@@ -69,10 +69,10 @@
     // メトリクス設定
     const metrics = [];
     metrics.push(`<span>🛠️ ${data.tech.split(' - ')[0]}</span>`);
-    metrics.push(`<span>⏳ ${data.duration}</span>`);
-    metrics.push(`<span>👥 ${data.team}</span>`);
-    if (data.plays) metrics.push(`<span>🎮 ${data.plays}</span>`);
-    if (data.avgTime) metrics.push(`<span>⏱️ ${data.avgTime}</span>`);
+    //metrics.push(`<span>⏳ ${data.duration}</span>`);
+    //metrics.push(`<span>👥 ${data.team}</span>`);
+    //if (data.plays) metrics.push(`<span>🎮 ${data.plays}</span>`);
+    //if (data.avgTime) metrics.push(`<span>⏱️ ${data.avgTime}</span>`);
     document.getElementById('metricsArea').innerHTML = metrics.join('');
 
     // プロジェクト情報
