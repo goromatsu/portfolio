@@ -26,20 +26,24 @@
     }
 
     /* ヘッダー */
+    html {
+      scroll-padding-top: 80px;
+    }
+
     header {
       position: fixed;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 960px;
-      z-index: 1000;
-      background: var(--bg-color);
-      padding: 1.5rem;
+      left: 0;
+      right: 0;
+      background-color: rgba(15, 15, 15, 0.95);
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     header h1 {
@@ -58,10 +62,29 @@
     }
 
     .links a {
-      color: var(--primary-color);
+      color: #f2f2f2;
       text-decoration: none;
+      margin-left: 1.8rem;
       font-size: 1rem;
-      line-height: 1.5; /* 行の高さを調整 */
+      transition: color 0.3s ease;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #f2f2f2;
+      transition: width 0.3s ease;
+    }
+
+    .links a:hover::after,
+    .links a:focus::after {
+      width: 100%;
     }
 
     .project-link {
@@ -155,16 +178,22 @@
     .media-container video {
       opacity: 0;
       z-index: 2;
-      display: block !important;
       pointer-events: none;
     }
 
-    .media-container:hover img {
+    .media-container.playing img {
       opacity: 0;
     }
 
-    .media-container:hover video {
+    .media-container.playing video {
       opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .media-container img,
+      .media-container video {
+        transition: none;
+      }
     }
 
     .media-container iframe {
@@ -216,8 +245,34 @@
     }
 
     /* お問い合わせフォーム */
-    .contact-section {
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: var(--primary-color);
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-color);
+      margin: 0.5rem auto 0;
+    }
+
+    .contact-section h2 {
       margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #333;
+    }
+
+    .contact-section {
+      margin-top: 6rem;
       padding-top: 2rem;
       border-top: 1px solid #333;
     }
@@ -342,15 +397,15 @@
 <body>
   <header>
     <h1>Goromatsu</h1>
-    <div class="links">
-      <a href="https://www.fortnite.com/@goromatsu">Fortnite</a>
-      <a href="https://x.com/_goromatsu">X</a>
-      <a href="https://github.com/goromatsu">GitHub</a>
-      <a href="#" class="resume-button" style="color: #000000 !important; background: #78f2c3; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: bold;">お問い合わせ</a>
-    </div>
+    <nav class="links" aria-label="メインナビゲーション">
+      <a href="https://www.fortnite.com/@goromatsu" target="_blank" rel="noopener noreferrer" aria-label="フォートナイトのプロフィール">Fortnite</a>
+      <a href="https://www.youtube.com/@goromatsu" target="_blank" rel="noopener noreferrer" aria-label="YouTubeチャンネル">YouTube</a>
+      <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer" aria-label="X（旧Twitter）プロフィール">X(Twitter)</a>
+      <a href="#contact" class="contact-button" aria-label="お問い合わせフォーム">お問い合わせ</a>
+    </nav>
   </header>
   <div class="section">
-    <h2>ポートフォリオ</h2>
+    <h2>　　</h2>
     <div class="project-grid" id="projectGrid">
       <!-- プロジェクト一覧はJavaScriptで動的に読み込みます -->
     </div>
@@ -374,23 +429,30 @@
 
     <!-- お問い合わせフォームセクション -->
     <div class="section contact-section">
-      <h2>お問い合わせ</h2>
-      <form id="contactForm" class="contact-form" action="https://formspree.io/f/xgegqkog" method="POST">
-        <div class="form-group">
-          <label for="subject">件名</label>
-          <input type="text" id="subject" name="subject" required>
-        </div>
-        <div class="form-group">
-          <label for="message">本文</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
-          <p class="form-hint">※返信をご希望の際は、メールアドレスを本文にご記入いただけますと幸いです。</p>
-        </div>
-        <button type="submit" class="submit-button">送信する</button>
-      </form>
-      <p class="contact-note">
-        X（旧Twitter）のDMからもお問い合わせいただけます: 
-        <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer">@_goromatsu</a>
-      </p>
+      <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="section-title">お問い合わせ</h2>
+        <form id="contactForm" class="contact-form" action="https://formspree.io/f/xgegqkog" method="POST">
+          <div class="form-group">
+            <label for="subject">件名</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          <div class="form-group">
+            <label for="message">本文</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <p class="form-hint">※返信をご希望の際は、メールアドレスを本文にご記入いただけますと幸いです。</p>
+          </div>
+          <div class="form-group">
+            <label for="honeypot" class="visually-hidden">このフィールドは空のままにしてください</label>
+            <input type="text" id="honeypot" name="_honeypot" tabindex="-1" class="visually-hidden">
+          </div>
+          <button type="submit" class="submit-button">送信する</button>
+        </form>
+        <p class="contact-note">
+          X（旧Twitter）のDMからもお問い合わせいただけます: 
+          <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer">@_goromatsu</a>
+        </p>
+      </section>
+    </div>
     </div>
   </div>
   <script>
@@ -441,112 +503,128 @@
       }
     });
 
-    // マウスオーバーで動画を再生
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOMが読み込まれました');
-      const mediaContainers = document.querySelectorAll('.media-container');
-      
-      mediaContainers.forEach((container, index) => {
-        console.log(`メディアコンテナ #${index + 1} を処理中...`);
+    // プロジェクトカードの動画ホバー機能を初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.media-container').forEach(container => {
         const video = container.querySelector('video');
         const img = container.querySelector('img');
         
-        if (!video) {
-          console.error('動画要素が見つかりません');
-          return;
-        }
-        if (!img) {
-          console.error('画像要素が見つかりません');
-          return;
-        }
-
-        // 動画の情報をログに出力
-        console.log(`動画ソース: ${video.querySelector('source')?.src}`);
-        console.log(`動画の準備状態: ${video.readyState} (0=HAVE_NOTHING, 1=HAVE_METADATA, 2=HAVE_CURRENT_DATA, 3=HAVE_FUTURE_DATA, 4=HAVE_ENOUGH_DATA)`);
+        if (!video || !img) return;
         
-        // 動画の読み込みチェック
-        const checkVideo = () => {
-          console.log(`動画の読み込み状態チェック: ${video.readyState}`);
-          // 動画のメタデータを取得
-          if (video.readyState >= 1) { // HAVE_ENOUGH_DATA
-            console.log('動画のメタデータが利用可能です');
-            // 動画が利用可能な場合
-            video.style.opacity = '0';
-            video.style.pointerEvents = 'none';
+        // 動画のメタデータが読み込まれるのを待つ
+        const initVideo = () => {
+          // 動画の読み込み状態を確認
+          console.log(`動画の読み込み状態: ${['HAVE_NOTHING', 'HAVE_METADATA', 'HAVE_CURRENT_DATA', 'HAVE_FUTURE_DATA', 'HAVE_ENOUGH_DATA'][video.readyState]}`);
+          
+          // 自動再生ポリシー対策
+          video.muted = true;
+          video.playsInline = true;
+          video.preload = 'metadata';
+          
+          // 動画の読み込みが完了していない場合はログを出力
+          if (video.readyState < 1) { // HAVE_NOTHING
+            console.warn('動画の読み込みが開始されていません。preload属性を確認してください。');
             
-            const onMouseEnter = function() {
-              console.log('マウスオーバー: 動画再生を試みます');
-              video.play().then(() => {
-                console.log('動画の再生に成功しました');
-              }).catch(e => {
-                console.error('動画の再生に失敗しました:', e);
-                // 再生に失敗した場合も画像を表示
-                video.style.opacity = '0';
-                img.style.opacity = '1';
+            // 手動で読み込みを試みる
+            video.load();
+            return false;
+          }
+          
+          return true;
+        };
+        
+        const play = () => {
+          // 動画が再生可能か確認
+          if (!initVideo()) {
+            console.log('動画の準備ができていません。再度試行します。');
+            setTimeout(play, 500);
+            return;
+          }
+          
+          // 再生を試みる
+          const playPromise = video.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.catch(e => {
+              console.error('動画の再生に失敗しました:', {
+                src: video.querySelector('source')?.src,
+                error: e,
+                readyState: video.readyState,
+                networkState: video.networkState,
+                errorState: video.error
               });
-            };
-            
-            const onMouseLeave = function() {
-              console.log('マウスアウト: 動画を一時停止');
-              video.pause();
-              video.currentTime = 0;
-              video.style.opacity = '0';
+              // 動画を非表示にし、画像を表示
+              video.style.display = 'none';
               img.style.opacity = '1';
-            };
-
-            // イベントリスナーを削除してから追加（重複防止）
-            container.removeEventListener('mouseenter', onMouseEnter);
-            container.removeEventListener('mouseleave', onMouseLeave);
-            container.addEventListener('mouseenter', onMouseEnter);
-            container.addEventListener('mouseleave', onMouseLeave);
-
-            // 動画の再生状態に応じて画像の表示を切り替え
-            const onPlay = () => {
-              console.log('動画再生中');
-              video.style.opacity = '1';
-              img.style.opacity = '0';
-            };
-
-            video.addEventListener('play', onPlay);
-
-            // 一度設定したらイベントリスナーを削除
-            video.removeEventListener('loadeddata', checkVideo);
+            });
           }
         };
+        
+        const stop = () => { 
+          video.pause(); 
+          video.currentTime = 0; 
+        };
+        
+        // マウスイベント
+        container.addEventListener('mouseenter', () => { 
+          container.classList.add('playing');
+          // すでに再生中の場合は何もしない
+          if (video.paused) {
+            play();
+          }
+        });
+        container.addEventListener('mouseleave', () => { 
+          stop(); 
+          container.classList.remove('playing'); 
+        });
+        
+        // キーボードナビゲーション対応
+        container.addEventListener('focusin', () => { 
+          container.classList.add('playing'); 
+          play(); 
+        });
+        container.addEventListener('focusout', () => { 
+          stop(); 
+          container.classList.remove('playing'); 
+        });
+        
+        // タッチデバイスでのタップで再生/停止を切り替え
+        container.addEventListener('click', (e) => {
+          if (window.matchMedia('(hover: none)').matches) {
+            if (container.classList.contains('playing')) {
+              stop();
+              container.classList.remove('playing');
+            } else {
+              play();
+              container.classList.add('playing');
+            }
+            e.preventDefault();
+          }
+        });
 
-        // エラーハンドリング
-        const handleError = function(e) {
-          console.error('動画の読み込みに失敗しました:', {
-            src: video.querySelector('source')?.src,
-            error: e,
-            readyState: video.readyState,
-            networkState: video.networkState,
-            errorState: video.error
-          });
-          // 動画を非表示にし、画像を表示
+        // 動画のエラーハンドリング
+        video.addEventListener('error', (e) => {
+          console.error('動画の読み込みエラー:', e);
           video.style.display = 'none';
           img.style.opacity = '1';
-          // マウスオーバー時のイベントを削除
-          container.onmouseenter = null;
-          container.onmouseleave = null;
-        };
+        });
 
-        // 動画の読み込みが完了したらチェック
-        if (video.readyState >= 1) {
-          console.log('動画はすでに読み込み済みです');
-          checkVideo();
-        } else {
-          console.log('動画の読み込みを待機中...');
-          video.addEventListener('loadeddata', checkVideo);
-          video.addEventListener('error', handleError);
-        }
-        
-        // 初期状態でエラーチェック
-        setTimeout(() => {
-          if (video.readyState === 0) { // HAVE_NOTHING
-            console.warn('動画の読み込みが開始されていません。preload属性を確認してください。');
+        // 動画のメタデータが読み込まれたら準備完了
+        video.addEventListener('loadedmetadata', () => {
+          console.log('動画のメタデータが読み込まれました');
+          // 動画の準備ができたら自動再生を試みる
+          if (container.classList.contains('playing')) {
+            play();
           }
-        }, 1000);
+        });
+        
+        // 動画の読み込みが完了したら準備完了
+        video.addEventListener('canplay', () => {
+          console.log('動画の再生準備が完了しました');
+          if (container.classList.contains('playing')) {
+            play();
+          }
+        });
       });
     });
   </script>
