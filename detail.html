@@ -11,7 +11,7 @@
     header a { color:#3794FF; text-decoration:none; font-size:1rem; }
     .detail-container { max-width:960px; margin:2rem auto; padding:0 1rem; display:flex; flex-direction:column; gap:1.5rem; }
     .video-container { position:relative; width:100%; padding-top:56.25%; background:#111; border-radius:8px; overflow:hidden; }
-    .video-container iframe, .video-container video { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+    .video-container img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
     .metrics { display:flex; flex-wrap:wrap; gap:0.5rem; }
     .metrics span { background:#78f2c3; color:#000; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.85rem; }
     .info-boxes { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
@@ -20,9 +20,54 @@
     .info-box ul { margin:0; padding-left:1rem; color:#ccc; font-size:0.85rem; }
     .info-box ul li { margin-bottom:0.4rem; }
     .info-box p { margin:0; color:#ccc; font-size:0.9rem; }
-    .description-container { background:#0f0f0f; border-radius:6px; padding:1rem; }
+    .description-container { background:#0f0f0f; border-radius:6px; padding:1.5rem; }
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .system-card {
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 1.25rem;
+      border-left: 4px solid #78f2c3;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .system-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .system-card h4 {
+      margin: 0 0 0.5rem 0;
+      color: #78f2c3;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .system-card h4::before {
+      content: '⚙️';
+      font-size: 1.2em;
+    }
     .description-container h3 { margin:0 0 0.75rem; color:#78f2c3; font-size:1.1rem; }
     .description-container p { margin-bottom:1rem; color:#ccc; font-size:0.9rem; }
+    .tech-tags { 
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .tech-tag { 
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #78f2c3; 
+      border-radius: 4px; 
+      padding: 0.25rem 0.75rem; 
+      font-size: 0.9rem; 
+      color: #78f2c3;
+      white-space: nowrap;
+    }
     @media (max-width:600px) { header { flex-direction:column; align-items:flex-start; } header a { margin-top:0.5rem; } .detail-container { gap:1rem; } }
   </style>
 </head>
@@ -33,8 +78,10 @@
   </header>
 
   <div class="detail-container">
-    <!-- 動画表示エリア -->
-    <div class="video-container" id="videoArea"></div>
+    <!-- サムネイル表示エリア -->
+    <div class="video-container" id="videoArea">
+      <img src="" alt="プロジェクトサムネイル" id="projectThumbnail">
+    </div>
 
     <!-- メトリクス -->
     <div class="metrics" id="metricsArea"></div>
@@ -62,40 +109,52 @@
     const data = projects.find(p => p.id === id);
     if (!data) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">プロジェクトが見つかりません (id=' + id + ')</p>'; return; }
 
-    // 動画埋め込み
-    document.getElementById('videoArea').innerHTML = `
-      <iframe src="https://www.youtube.com/embed/${data.videoId}?autoplay=1&mute=1&loop=1&playlist=${data.videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    // サムネイル画像を設定
+    document.getElementById('projectThumbnail').src = `images/project_${id}.jpg`;
 
     // メトリクス設定
     const metrics = [];
-    metrics.push(`<span>🛠️ ${data.tech.split(' - ')[0]}</span>`);
-    //metrics.push(`<span>⏳ ${data.duration}</span>`);
-    //metrics.push(`<span>👥 ${data.team}</span>`);
-    //if (data.plays) metrics.push(`<span>🎮 ${data.plays}</span>`);
-    //if (data.avgTime) metrics.push(`<span>⏱️ ${data.avgTime}</span>`);
-    document.getElementById('metricsArea').innerHTML = metrics.join('');
+    // 技術スタックをカンマ区切りで分割してそれぞれをタグとして表示
+    const techItems = data.tech.split(',').map(tech => tech.trim());
+    const techTags = techItems.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
+    document.getElementById('metricsArea').innerHTML = techTags;
 
     // プロジェクト情報
     document.getElementById('box-info').innerHTML = `
       <h3>プロジェクト情報</h3>
       <ul>
-        <li>役割: ${data.role}</li>
         <li>チームサイズ: ${data.team}</li>
         <li>制作期間: ${data.duration}</li>
-        <li>総プレイ数: ${data.plays || '—'}</li>
-        <li>平均プレイ時間: ${data.avgTime || '—'}</li>
       </ul>`;
 
-    // 概要
-    document.getElementById('box-overview').innerHTML = `<h3>プロジェクト概要</h3><p>${data.overview}</p>`;
+    // 担当作業を配列から改行付きで表示
+    const rolesHtml = data.roles ? data.roles.map(role => `<li>${role}</li>`).join('') : '';
+    document.getElementById('box-overview').innerHTML = `
+      <h3>担当作業</h3>
+      <ul style="list-style-type: none; padding-left: 0; margin: 0;">
+        ${rolesHtml}
+      </ul>`;
 
-    // 仕様工夫とシステム工夫を description-container にまとめて表示
+    // プロジェクト概要と実装システム一覧
+    const systemsHtml = data.systems ? data.systems.map(system => `
+      <div class="system-card">
+        <h4>${system.title || 'システム'}</h4>
+        <p style="margin: 0; color: #e0e0e0; font-size: 0.95rem; line-height: 1.5;">${system.description || system}</p>
+      </div>
+    `).join('') : '';
+    
     document.getElementById('box-details').innerHTML = `
-      <h3>仕様工夫</h3>
-      <p>${data.spec || ''}</p>
-      <h3>システム工夫</h3>
-      <p>${data.system || ''}</p>
-    `;
+      <div style="margin-bottom: 2rem;">
+        <h3>プロジェクト概要</h3>
+        <p style="line-height: 1.6;">${data.overview || ''}</p>
+      </div>
+      
+      <div>
+        <h3>実装システム一覧</h3>
+        <div class="systems-grid">
+          ${systemsHtml}
+        </div>
+      </div>`;
   })();
   </script>
 </body>
