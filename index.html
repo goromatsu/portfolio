@@ -264,6 +264,18 @@
       background: var(--primary-color);
       margin: 0.5rem auto 0;
     }
+    /* 視覚的に隠す（スクリーンリーダー配慮）*/
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap; /* 余分な改行を防ぐ */
+      border: 0;
+    }
 
     .contact-section h2 {
       margin-top: 3rem;
@@ -272,7 +284,7 @@
     }
 
     .contact-section {
-      margin-top: 6rem;
+      margin-top: 2rem;
       padding-top: 2rem;
       border-top: 1px solid #333;
     }
@@ -443,7 +455,7 @@
           </div>
           <div class="form-group">
             <label for="honeypot" class="visually-hidden">このフィールドは空のままにしてください</label>
-            <input type="text" id="honeypot" name="_honeypot" tabindex="-1" class="visually-hidden">
+            <input type="text" id="honeypot" name="_gotcha" tabindex="-1" class="visually-hidden" aria-hidden="true" autocomplete="off" inputmode="none">
           </div>
           <button type="submit" class="submit-button">送信する</button>
         </form>
@@ -462,17 +474,33 @@
       if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
           e.preventDefault();
-          
+
           const submitButton = contactForm.querySelector('button[type="submit"]');
           const originalButtonText = submitButton.textContent;
-          
+          const honeypotEl = contactForm.querySelector('#honeypot');
+          if (honeypotEl && honeypotEl.value) {
+            // ハニーポットが埋まっている場合は送信しない（スパム想定）
+            alert('スパム防止機能により送信がブロックされました。\n恐れ入りますが、別のブラウザ/シークレットウィンドウでお試しください。');
+            // 念のためボタン状態を元に戻す
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = originalButtonText;
+            }
+            return;
+          }
+
           try {
             // ボタンを無効化してローディング状態に
             submitButton.disabled = true;
             submitButton.textContent = '送信中...';
-            
+
             // Formspreeにフォームデータを送信
             const formData = new FormData(contactForm);
+            // 件名をメールのサブジェクトとして指定（任意）
+            const subjectEl = contactForm.querySelector('#subject');
+            if (subjectEl && subjectEl.value) {
+              formData.append('_subject', subjectEl.value);
+            }
             const response = await fetch(contactForm.action, {
               method: 'POST',
               body: formData,
@@ -487,9 +515,15 @@
               contactForm.reset();
             } else {
               // エラー発生時
-              const errorData = await response.json();
-              console.error('送信エラー:', errorData);
-              throw new Error('送信に失敗しました');
+              let detail = '';
+              try {
+                const json = await response.json();
+                detail = json && json.errors ? json.errors.map(e => e.message || e).join('\n') : JSON.stringify(json);
+              } catch (_) {
+                detail = await response.text();
+              }
+              console.error('送信エラー:', response.status, response.statusText, detail);
+              alert(`送信に失敗しました (HTTP ${response.status}).\n${detail || '原因不明のエラーです。'}\nFormspreeのドメイン許可設定やネットワーク状況をご確認ください。`);
             }
           } catch (error) {
             console.error('エラー:', error);
@@ -504,187 +538,89 @@
     });
 
     // プロジェクトカードの動画ホバー機能を初期化
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.media-container').forEach(container => {
-        const video = container.querySelector('video');
-        const img = container.querySelector('img');
-        
-        if (!video || !img) return;
-        
-        // 動画のメタデータが読み込まれるのを待つ
-        const initVideo = () => {
-          // 動画の読み込み状態を確認
-          console.log(`動画の読み込み状態: ${['HAVE_NOTHING', 'HAVE_METADATA', 'HAVE_CURRENT_DATA', 'HAVE_FUTURE_DATA', 'HAVE_ENOUGH_DATA'][video.readyState]}`);
-          
-          // 自動再生ポリシー対策
-          video.muted = true;
-          video.playsInline = true;
-          video.preload = 'metadata';
-          
-          // 動画の読み込みが完了していない場合はログを出力
-          if (video.readyState < 1) { // HAVE_NOTHING
-            console.warn('動画の読み込みが開始されていません。preload属性を確認してください。');
-            
-            // 手動で読み込みを試みる
-            video.load();
-            return false;
-          }
-          
-          return true;
-        };
-        
-        const play = () => {
-          // 動画が再生可能か確認
-          if (!initVideo()) {
-            console.log('動画の準備ができていません。再度試行します。');
-            setTimeout(play, 500);
-            return;
-          }
-          
-          // 再生を試みる
-          const playPromise = video.play();
-          
-          if (playPromise !== undefined) {
-            playPromise.catch(e => {
-              console.error('動画の再生に失敗しました:', {
-                src: video.querySelector('source')?.src,
-                error: e,
-                readyState: video.readyState,
-                networkState: video.networkState,
-                errorState: video.error
-              });
-              // 動画を非表示にし、画像を表示
-              video.style.display = 'none';
-              img.style.opacity = '1';
-            });
-          }
-        };
-        
-        const stop = () => { 
-          video.pause(); 
-          video.currentTime = 0; 
-        };
-        
-        // マウスイベント
-        container.addEventListener('mouseenter', () => { 
-          container.classList.add('playing');
-          // すでに再生中の場合は何もしない
-          if (video.paused) {
-            play();
-          }
-        });
-        container.addEventListener('mouseleave', () => { 
-          stop(); 
-          container.classList.remove('playing'); 
-        });
-        
-        // キーボードナビゲーション対応
-        container.addEventListener('focusin', () => { 
-          container.classList.add('playing'); 
-          play(); 
-        });
-        container.addEventListener('focusout', () => { 
-          stop(); 
-          container.classList.remove('playing'); 
-        });
-        
-        // タッチデバイスでのタップで再生/停止を切り替え
-        container.addEventListener('click', (e) => {
-          if (window.matchMedia('(hover: none)').matches) {
-            if (container.classList.contains('playing')) {
-              stop();
-              container.classList.remove('playing');
-            } else {
-              play();
-              container.classList.add('playing');
-            }
-            e.preventDefault();
-          }
-        });
-
-        // 動画のエラーハンドリング
-        video.addEventListener('error', (e) => {
-          console.error('動画の読み込みエラー:', e);
-          video.style.display = 'none';
-          img.style.opacity = '1';
-        });
-
-        // 動画のメタデータが読み込まれたら準備完了
-        video.addEventListener('loadedmetadata', () => {
-          console.log('動画のメタデータが読み込まれました');
-          // 動画の準備ができたら自動再生を試みる
+  document.addEventListener('DOMContentLoaded', async () => {
+    // 1) プロジェクトを読み込んで描画
+    const projectGrid = document.getElementById('projectGrid');
+    try {
+      const res = await fetch('project-list.json');
+      const projects = await res.json();
+      const html = projects.map(p => `
+        <a href="detail.html?id=${p.id}" class="project-link">
+          <div class="project">
+            <div class="media-container" tabindex="0">
+              <img src="${p.thumbnail}" alt="${p.title} サムネイル" loading="lazy">
+              <video loop muted playsinline preload="metadata" width="100%" height="100%">
+                <source src="${p.video}" type="video/mp4">
+              </video>
+            </div>
+            <h2>${p.title}</h2>
+            <small>
+              <span class="tools">${p.tools.join(' / ')}</span>
+              <span class="duration">${p.duration}</span>
+            </small>
+            <p>${p.overview}</p>
+          </div>
+        </a>
+      `).join('');
+      projectGrid.innerHTML = html;
+    } catch (e) {
+      console.error('プロジェクトの読み込みに失敗:', e);
+      projectGrid.innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
+    }
+  
+    // 2) ここで初期化（挿入後に1回）
+    const containers = document.querySelectorAll('.media-container');
+    containers.forEach(container => {
+      const video = container.querySelector('video');
+      const img   = container.querySelector('img');
+      if (!video || !img) return;
+    
+      // 再生/停止ヘルパ
+      const play = () => video.play().catch(()=>{ /* 自動再生ポリシー対策（muted指定済み）*/ });
+      const stop = () => { video.pause(); video.currentTime = 0; };
+    
+      // マウス
+      container.addEventListener('mouseenter', () => {
+        container.classList.add('playing');
+        if (video.paused) play();
+      });
+      container.addEventListener('mouseleave', () => {
+        stop();
+        container.classList.remove('playing');
+      });
+    
+      // キーボード（Tabで入ったら再生）
+      container.addEventListener('focusin', () => {
+        container.classList.add('playing');
+        play();
+      });
+      container.addEventListener('focusout', () => {
+        stop();
+        container.classList.remove('playing');
+      });
+    
+      // タッチ（hover無い環境向けトグル）
+      container.addEventListener('click', (e) => {
+        if (window.matchMedia('(hover: none)').matches) {
           if (container.classList.contains('playing')) {
+            stop();
+            container.classList.remove('playing');
+          } else {
             play();
+            container.classList.add('playing');
           }
-        });
-        
-        // 動画の読み込みが完了したら準備完了
-        video.addEventListener('canplay', () => {
-          console.log('動画の再生準備が完了しました');
-          if (container.classList.contains('playing')) {
-            play();
-          }
-        });
+          e.preventDefault();
+        }
+      });
+    
+      // 読み込み系はログ不要なら省略可
+      video.addEventListener('error', () => {
+        // 壊れたソースは画像でフォールバック
+        video.style.display = 'none';
+        img.style.opacity = '1';
       });
     });
-  </script>
-
-  <script>
-
-    // プロジェクトデータを読み込んで表示
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const response = await fetch('project-list.json');
-        const projects = await response.json();
-        const projectGrid = document.getElementById('projectGrid');
-        
-        // 各プロジェクトのHTMLを生成
-        projects.forEach(project => {
-          const projectElement = `
-            <a href="detail.html?id=${project.id}" class="project-link">
-              <div class="project">
-                <div class="media-container">
-                  <img src="${project.thumbnail}" alt="${project.title} サムネイル">
-                  <video loop muted preload="metadata" width="100%" height="100%" style="display: none;">
-                    <source src="${project.video}" type="video/mp4">
-                    お使いのブラウザは動画の再生をサポートしていません。
-                  </video>
-                </div>
-                <h2>${project.title}</h2>
-                <small>
-                  <span class="tools">${project.tools.join(' / ')}</span>
-                  <span class="duration">${project.duration}</span>
-                </small>
-                <p>${project.overview}</p>
-              </div>
-            </a>
-          `;
-          projectGrid.insertAdjacentHTML('beforeend', projectElement);
-        });
-
-        // マウスオーバーで動画を再生するイベントリスナーを追加
-        document.querySelectorAll('.media-container').forEach(container => {
-          const video = container.querySelector('video');
-          
-          container.addEventListener('mouseenter', () => {
-            if (video) {
-              video.play().catch(e => console.log('動画の再生に失敗しました:', e));
-            }
-          });
-          
-          container.addEventListener('mouseleave', () => {
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-            }
-          });
-        }); // Close forEach
-
-      } catch (error) {
-        console.error('プロジェクトの読み込みに失敗しました:', error);
-        document.getElementById('projectGrid').innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
-      }
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
