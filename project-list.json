@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "title": "BALLISTIC TRAINING バリスティック練習マップ",
+    "thumbnail": "images/project_1.jpg",
+    "video": "videos/test.mp4",
+    "tools": ["UEFN", "Verse", "Fortnite"],
+    "duration": "7日",
+    "overview": "FPSのエイム練習に特化したゲーム。トラッキング、ピーキング、PvE、PvP練習も可能。処理負荷とメモリサイズを抑え、最小限の要素で構築"
+  },
+  {
+    "id": "2",
+    "title": "BURGER SHOP SIMULATOR",
+    "thumbnail": "images/project_2.jpg",
+    "video": "videos/project2.mp4",
+    "tools": ["UEFN", "Verse", "Fortnite"],
+    "duration": "7日",
+    "overview": "オーダーを元にハンバーガーを作るゲーム。素材には加工が必要なものもあり、切る、焼く、揚げるなどの調理工程を実装"
+  },
+  {
+    "id": "3",
+    "title": "MAD TYCOON カオスタイクーン",
+    "thumbnail": "images/project_3.jpg",
+    "video": "videos/project3.mp4",
+    "tools": ["UEFN", "Verse", "Fortnite"],
+    "duration": "20日",
+    "overview": "鉱石を集め、換金し、拠点をアップグレードしていくタイクーンゲーム。アクションに対して過剰なフィードバックを実装"
+  },
+  {
+    "id": "4",
+    "title": "ROGUE NITE ローグライクサバイバル",
+    "thumbnail": "images/project_4.jpg",
+    "video": "videos/project3.mp4",
+    "tools": ["UEFN", "Verse", "Fortnite"],
+    "duration": "21日",
+    "overview": "遊ぶたびにステージ構成が変化し、能力強化やドロップ武器でボス討伐を目指すローグライクゲーム。拡張性に重きを置いたシステム実装"
+  },
+  {
+    "id": "5",
+    "title": "CRAFT WORLD FRONTIER",
+    "thumbnail": "images/project_5.jpg",
+    "video": "videos/project3.mp4",
+    "tools": ["UEFN", "Verse", "Fortnite"],
+    "duration": "30日",
+    "overview": "レシピと資源を集めてクラフトするオープンワールド型サバイバルゲーム。UIを自作し快適なクラフトを機能を実現"
+  },
+  {
+    "id": "6",
+    "title": "Anomaly 夜警",
+    "thumbnail": "images/project_6.jpg",
+    "video": "videos/project3.mp4",
+    "tools": ["UEFN", "Verse", "Fortnite"],
+    "duration": "10日",
+    "overview": "ジャンプスケアを極力抑えた探索メインのホラーゲーム。ステージ選択制でアップデートを行いやすい設計に"
+  }
+]

@@ -3,9 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ゲーム開発者ポートフォリオ</title>
+  <title>開発ゲーム一覧</title>
   <style>
-    body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.5;}
+    /* 基本スタイル */
+    :root {
+      --bg-color: #0f0f0f;
+      --text-color: #f2f2f2;
+      --primary-color: #78f2c3;
+      --secondary-color: #007ACC;
+      --card-bg: #0f0f0f;
+      --tag-border: #78f2c3;
+      --tag-text: #78f2c3;
+      --meta-text: #ccc;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.5;
+    }
+
+    /* ヘッダー */
     header {
       position: fixed;
       top: 0;
@@ -14,31 +34,108 @@
       width: 100%;
       max-width: 960px;
       z-index: 1000;
-      background: #0f0f0f;
+      background: var(--bg-color);
       padding: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
     }
-    header h1 { color:#78f2c3; margin:0; font-size:1.8rem; }
-    .links { display:flex; flex-wrap:wrap; margin-top:0.5rem; }
-    .links a { margin-right:1rem; color:#3794FF; text-decoration:none; font-size:1rem; }
-    .resume-button { background:#3794FF; padding:0.5rem 1rem; border:none; border-radius:5px; color:#000; text-decoration:none; font-weight:bold; }
-    .section { padding:2rem 1rem; max-width:960px; margin:0 auto; }
-    .section h2 { font-size:1.6rem; margin-bottom:1rem; }
-    .project-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
-    .project-link { text-decoration:none; color:inherit; }
-    .project { background:#0f0f0f; padding:1rem; border-radius:8px; display:flex; flex-direction:column; transition:transform 0.2s; }
-    .project:hover { transform:translateY(-4px); }
+
+    header h1 {
+      color: var(--primary-color);
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    /* ナビゲーションリンク */
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+      align-items: center; /* 縦方向の中央揃え */
+      gap: 1rem; /* リンク間の間隔を均一に */
+    }
+
+    .links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 1rem;
+      line-height: 1.5; /* 行の高さを調整 */
+    }
+
+    .project-link {
+      text-decoration: none;
+      color: var(--text-color);
+    }
+    
+    .project-link:visited {
+      color: var(--text-color);
+    }
+    
+    .project-link:hover,
+    .project-link:active {
+      text-decoration: none;
+    }
+
+    /* ボタン */
+    .resume-button {
+      background: var(--primary-color);
+      padding: 0.4rem 1rem 0.3rem; /* 上下のパディングを調整 */
+      border: none;
+      border-radius: 5px;
+      color: var(--bg-color) !important;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      font-size: 1rem; /* フォントサイズをリンクと合わせる */
+      line-height: 1.5; /* 行の高さを調整 */
+      margin-top: 0.1rem; /* 微調整 */
+    }
+
+    /* セクション */
+    .section {
+      padding: 2rem 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    /* プロジェクトグリッド */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+
+    .project:hover {
+      transform: translateY(-4px);
+    }
+
+    /* メディアコンテナ */
     .media-container {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      padding-top: 56.25%; /* 16:9 アスペクト比 */
       overflow: hidden;
       border-radius: 8px;
       margin-bottom: 1rem;
+      background-color: #1a1a1a;
     }
+
     .media-container img,
     .media-container video {
       position: absolute;
@@ -47,39 +144,198 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease-in-out;
     }
+
+    .media-container img {
+      opacity: 1;
+      z-index: 1;
+    }
+
     .media-container video {
       opacity: 0;
+      z-index: 2;
+      display: block !important;
       pointer-events: none;
     }
-    .media-container:hover video {
-      opacity: 1;
-    }
+
     .media-container:hover img {
       opacity: 0;
     }
-    .media-container iframe { display: none; }
-    /* ホバー時の動画再生を無効化 */
-    /* .project:hover .media-container iframe { opacity:1; } */
-    /* .project:hover .media-container img { opacity:0; } */
-    .project h2 { color:#007ACC; margin:0.75rem 0 0.5rem; font-size:1.2rem; }
-    .project small { color:#ccc; font-size:0.7rem; display: flex; gap: 0.5rem;}
-    .project small .tools::before {content: '🛠️';}
-    .project small .duration::before {content: '⏳';}
-    .project p { margin-top:0.5rem; font-size:0.95rem; flex-grow:1; }
+
+    .media-container:hover video {
+      opacity: 1;
+    }
+
+    .media-container iframe {
+      display: none;
+    }
+
+    /* プロジェクト情報 */
+    .project h2 {
+      color: var(--secondary-color);
+      margin: 0.75rem 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .project small {
+      color: var(--meta-text);
+      font-size: 0.7rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .project small .tools::before {
+      content: '🛠️';
+    }
+
+    .project small .duration::before {
+      content: '⏳';
+    }
+
+    .project p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      flex-grow: 1;
+      color: var(--text-color);
+    }
+
     /* 技術タグ */
-    .tech-tags { margin-top:1rem; }
-    .tech-tag { display:inline-block; border:1px solid #78f2c3; border-radius:4px; padding:0.25rem 0.5rem; margin:0.25rem; font-size:0.9rem; color:#78f2c3; }
-    @media (max-width:600px) { .project-grid { grid-template-columns:1fr; } }
-    @media (max-width:600px) {
-      .project-grid { grid-template-columns:1fr; }
-      header { flex-direction:column; align-items:flex-start; }
-      header h1 { font-size:1.6rem; }
-      .links a { margin-right:0.75rem; font-size:0.9rem; }
-      .section { padding:1rem; }
-      .project h2 { font-size:1.1rem; }
-      .project small, .project p { font-size:0.85rem; }
+    .tech-tags {
+      margin-top: 1rem;
+    }
+
+    .tech-tag {
+      display: inline-block;
+      border: 1px solid var(--tag-border);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      margin: 0.25rem;
+      font-size: 0.9rem;
+      color: var(--tag-text);
+    }
+
+    /* お問い合わせフォーム */
+    .contact-section {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #333;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    .form-group input[type="text"],
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #1a1a1a;
+      color: var(--text-color);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .form-hint {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--meta-text);
+      line-height: 1.4;
+    }
+
+    .submit-button {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+      background-color: #5cc2a0;
+    }
+
+    .contact-note {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--meta-text);
+    }
+
+    .contact-note a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .contact-note a:hover {
+      text-decoration: underline;
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 600px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      .links a {
+        margin-right: 0.75rem;
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding: 1rem;
+      }
+
+      .project h2 {
+        font-size: 1.1rem;
+      }
+
+      .project small,
+      .project p {
+        font-size: 0.85rem;
+      }
+
+      .contact-form {
+        padding: 0 1rem;
+      }
+      
+      .submit-button {
+        width: 100%;
+        padding: 0.75rem;
+      }
     }
   </style>
 </head>
@@ -87,123 +343,16 @@
   <header>
     <h1>Goromatsu</h1>
     <div class="links">
+      <a href="https://www.fortnite.com/@goromatsu">Fortnite</a>
       <a href="https://x.com/_goromatsu">X</a>
       <a href="https://github.com/goromatsu">GitHub</a>
-      <a href="#" class="resume-button">Resume ↓</a>
+      <a href="#" class="resume-button" style="color: #000000 !important; background: #78f2c3; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: bold;">お問い合わせ</a>
     </div>
   </header>
   <div class="section">
-    <h2>ゲーム開発者ポートフォリオ</h2>
-    <div class="project-grid">
-      <!-- 各プロジェクト要素 -->
-      <!-- プロジェクト1 -->
-      <a href="detail.html?id=1" class="project-link">
-        <div class="project">
-          <div class="media-container">
-            <img src="images/project_1.jpg" alt="プロジェクトA サムネイル">
-            <video loop muted preload="metadata" width="100%" height="100%" style="display: block;">
-              <source src="/videos/test.mp4" type="video/mp4">
-              お使いのブラウザは動画の再生をサポートしていません。
-            </video>
-          </div>
-          <h2>サンプルプロジェクトA (2023)</h2>
-          <small>
-            <span class="tools">UEFN (Verse)</span>
-            <span class="duration">2週間</span>
-          </small>
-          <p>基本的な3Dアクションのプロトタイプ。移動とカメラ制御を実装。</p>
-        </div>
-      </a>
-      <!-- プロジェクト2 -->
-      <a href="detail.html?id=2" class="project-link">
-        <div class="project">
-          <div class="media-container">
-            <img src="images/project_2.jpg" alt="プロジェクトB サムネイル">
-            <video loop muted preload="none">
-              <source src="videos/project_2.mp4" type="video/mp4">
-              お使いのブラウザは動画の再生をサポートしていません。
-            </video>
-          </div>
-          <h2>サンプルプロジェクトB (2022)</h2>          
-          <small>
-            <span class="tools">UEFN (Verse)</span>
-            <span class="duration">2週間</span>
-          </small>
-          <p>2Dプラットフォーマーのデモ。アニメーションと衝突判定を実装。</p>
-        </div>
-      </a>
-      <!-- プロジェクト3 -->
-      <a href="detail.html?id=3" class="project-link">
-        <div class="project">
-          <div class="media-container">
-            <img src="images/project_3.jpg" alt="プロジェクトC サムネイル">
-            <video loop muted preload="none">
-              <source src="videos/project_3.mp4" type="video/mp4">
-              お使いのブラウザは動画の再生をサポートしていません。
-            </video>
-          </div>
-          <h2>サンプルプロジェクトC (2024)</h2>
-          <small>
-            <span class="tools">UEFN (Verse)</span>
-            <span class="duration">2週間</span>
-          </small>
-          <p>フォトリアルな環境でのウォークスルーデモ。ライティングを調整。</p>
-        </div>
-      </a>
-      <!-- プロジェクト4 -->
-      <a href="detail.html?id=4" class="project-link">
-        <div class="project">
-          <div class="media-container">
-            <img src="images/project_4.jpg" alt="プロジェクトD サムネイル">
-            <video loop muted preload="none">
-              <source src="videos/project_4.mp4" type="video/mp4">
-              お使いのブラウザは動画の再生をサポートしていません。
-            </video>
-          </div>
-          <h2>サンプルプロジェクトD (2021)</h2>
-          <small>
-            <span class="tools">UEFN (Verse)</span>
-            <span class="duration">1週間</span>
-          </small>
-          <p>ブラウザゲームのミニゲーム。スコアシステムとレスポンシブ対応。</p>
-        </div>
-      </a>
-      <!-- プロジェクト5 -->
-      <a href="detail.html?id=5" class="project-link">
-        <div class="project">
-          <div class="media-container">
-            <img src="images/project_5.jpg" alt="プロジェクトE サムネイル">
-            <video loop muted preload="none">
-              <source src="videos/project_5.mp4" type="video/mp4">
-              お使いのブラウザは動画の再生をサポートしていません。
-            </video>
-          </div>
-          <h2>サンプルプロジェクトE (2020)</h2>          
-          <small>
-            <span class="tools">UEFN (Verse)</span>
-            <span class="duration">2週間</span>
-          </small>
-          <p>サイドスクロールシューティング。シンプルな敵AIを実装。</p>
-        </div>
-      </a>
-      <!-- プロジェクト6 -->
-      <a href="detail.html?id=6" class="project-link">
-        <div class="project">
-          <div class="media-container">
-            <img src="images/project_6.jpg" alt="プロジェクトF サムネイル">
-            <video loop muted preload="none">
-              <source src="videos/project_6.mp4" type="video/mp4">
-              お使いのブラウザは動画の再生をサポートしていません。
-            </video>
-          </div>
-          <h2>サンプルプロジェクトF (2019)</h2>         
-          <small>
-            <span class="tools">UEFN (Verse)</span>
-            <span class="duration">2日</span>
-          </small>
-          <p>2Dゲームエンジンの基礎。レンダリングパイプラインを自作。</p>
-        </div>
-      </a>
+    <h2>ポートフォリオ</h2>
+    <div class="project-grid" id="projectGrid">
+      <!-- プロジェクト一覧はJavaScriptで動的に読み込みます -->
     </div>
     <!-- 技術要素セクション -->
     <div class="section tech-section">
@@ -219,10 +368,79 @@
         <span class="tech-tag">C#</span>
         <span class="tech-tag">GdScript</span>
         <span class="tech-tag">Git</span>
+        <span class="tech-tag">Photoshop</span>
       </div>
+    </div>
+
+    <!-- お問い合わせフォームセクション -->
+    <div class="section contact-section">
+      <h2>お問い合わせ</h2>
+      <form id="contactForm" class="contact-form" action="https://formspree.io/f/xgegqkog" method="POST">
+        <div class="form-group">
+          <label for="subject">件名</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+          <label for="message">本文</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <p class="form-hint">※返信をご希望の際は、メールアドレスを本文にご記入いただけますと幸いです。</p>
+        </div>
+        <button type="submit" class="submit-button">送信する</button>
+      </form>
+      <p class="contact-note">
+        X（旧Twitter）のDMからもお問い合わせいただけます: 
+        <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer">@_goromatsu</a>
+      </p>
     </div>
   </div>
   <script>
+    // フォーム送信後の処理
+    document.addEventListener('DOMContentLoaded', function() {
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const submitButton = contactForm.querySelector('button[type="submit"]');
+          const originalButtonText = submitButton.textContent;
+          
+          try {
+            // ボタンを無効化してローディング状態に
+            submitButton.disabled = true;
+            submitButton.textContent = '送信中...';
+            
+            // Formspreeにフォームデータを送信
+            const formData = new FormData(contactForm);
+            const response = await fetch(contactForm.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+            
+            if (response.ok) {
+              // 送信成功時
+              alert('お問い合わせが送信されました。\nご連絡ありがとうございます。\n内容を確認し、できるだけ早くご返信いたします。');
+              contactForm.reset();
+            } else {
+              // エラー発生時
+              const errorData = await response.json();
+              console.error('送信エラー:', errorData);
+              throw new Error('送信に失敗しました');
+            }
+          } catch (error) {
+            console.error('エラー:', error);
+            alert('申し訳ありません。送信中にエラーが発生しました。\nしばらくしてからもう一度お試しいただくか、直接 g.m.goromatsu@gmail.com までご連絡ください。');
+          } finally {
+            // ボタンの状態を元に戻す
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+          }
+        });
+      }
+    });
+
     // マウスオーバーで動画を再生
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOMが読み込まれました');
@@ -330,11 +548,64 @@
           }
         }, 1000);
       });
-      
-      // グローバルなエラーハンドラ
-      window.addEventListener('error', function(e) {
-        console.error('グローバルエラー:', e);
-      });
+    });
+  </script>
+
+  <script>
+
+    // プロジェクトデータを読み込んで表示
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('project-list.json');
+        const projects = await response.json();
+        const projectGrid = document.getElementById('projectGrid');
+        
+        // 各プロジェクトのHTMLを生成
+        projects.forEach(project => {
+          const projectElement = `
+            <a href="detail.html?id=${project.id}" class="project-link">
+              <div class="project">
+                <div class="media-container">
+                  <img src="${project.thumbnail}" alt="${project.title} サムネイル">
+                  <video loop muted preload="metadata" width="100%" height="100%" style="display: none;">
+                    <source src="${project.video}" type="video/mp4">
+                    お使いのブラウザは動画の再生をサポートしていません。
+                  </video>
+                </div>
+                <h2>${project.title}</h2>
+                <small>
+                  <span class="tools">${project.tools.join(' / ')}</span>
+                  <span class="duration">${project.duration}</span>
+                </small>
+                <p>${project.overview}</p>
+              </div>
+            </a>
+          `;
+          projectGrid.insertAdjacentHTML('beforeend', projectElement);
+        });
+
+        // マウスオーバーで動画を再生するイベントリスナーを追加
+        document.querySelectorAll('.media-container').forEach(container => {
+          const video = container.querySelector('video');
+          
+          container.addEventListener('mouseenter', () => {
+            if (video) {
+              video.play().catch(e => console.log('動画の再生に失敗しました:', e));
+            }
+          });
+          
+          container.addEventListener('mouseleave', () => {
+            if (video) {
+              video.pause();
+              video.currentTime = 0;
+            }
+          });
+        }); // Close forEach
+
+      } catch (error) {
+        console.error('プロジェクトの読み込みに失敗しました:', error);
+        document.getElementById('projectGrid').innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
+      }
     });
   </script>
 </body>
