@@ -1,3 +1,14 @@
+<!--
+  ファイル: detail.html
+  機能: プロジェクト詳細ページ。固定ヘッダーを index.html と統一し、スマホでもコンテンツに被らないように実測したヘッダー高さをCSS変数へ反映。
+  関連: index.html のヘッダー設計と同一ポリシー（--header-height, scroll-padding-top, bodyのpadding-top, 背景・影・ブラー）
+  関係図:
+  [User]
+    ↓ クリック/遷移
+  index.html → (リンク) → detail.html
+                    ↑
+        同一デザインのヘッダー・余白制御（--header-height を共有方針で運用）
+-->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,10 +16,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>プロジェクト詳細 | Goromatsu</title>
   <style>
-    body { margin:0; background:#0f0f0f; color:#f2f2f2; font-family:'Segoe UI',sans-serif; line-height:1.6; padding-top:5rem; }
-    header { position:fixed; top:0; left:50%; transform:translateX(-50%); background:#0f0f0f; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; max-width:960px; width:100%; z-index:1000; }
-    header h1 { margin:0; color:#78f2c3; font-size:1.5rem; }
-    header a { color:#3794FF; text-decoration:none; font-size:1rem; }
+    /* 基本変数（index.html に準拠） */
+    :root {
+      --bg-color: #0f0f0f;
+      --text-color: #f2f2f2;
+      --primary-color: #78f2c3;
+      --secondary-color: #007ACC;
+      --meta-text: #ccc;
+      --header-height: 80px; /* 初期値。JSで実測して上書き */
+    }
+
+    html { scroll-padding-top: var(--header-height); }
+
+    body {
+      margin: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding-top: var(--header-height); /* 固定ヘッダー分のスペース */
+    }
+
+    /* ヘッダー（index.html と統一） */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: rgba(15, 15, 15, 0.95);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    header h1 { margin:0; color: var(--primary-color); font-size: 1.6rem; }
+    header a { color: #f2f2f2; text-decoration: none; font-size: 1rem; position: relative; padding: 0.5rem 0; }
+    header a::after { content:''; position:absolute; left:0; bottom:0; height:2px; width:0; background:#f2f2f2; transition:width .3s ease; }
+    header a:hover::after, header a:focus::after { width:100%; }
+    .links { display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center; }
     .detail-container { max-width:960px; margin:2rem auto; padding:0 1rem; display:flex; flex-direction:column; gap:1.5rem; }
     .video-container { position:relative; width:100%; padding-top:56.25%; background:#111; border-radius:8px; overflow:hidden; }
     .video-container img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
@@ -171,13 +216,21 @@
       transition: opacity 0.2s;
       pointer-events: none;
     }
-    @media (max-width:600px) { header { flex-direction:column; align-items:flex-start; } header a { margin-top:0.5rem; } .detail-container { gap:1rem; } }
+    @media (max-width:600px) {
+      :root { --header-height: 120px; }
+      header { flex-direction: column; align-items: flex-start; }
+      header a { margin-top: 0.5rem; }
+      .detail-container { gap: 1rem; }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Goromatsu</h1>
-    <a href="index.html">← プロジェクト一覧へ戻る</a>
+    <nav class="links" aria-label="メインナビゲーション">
+      <a href="index.html">← プロジェクト一覧へ戻る</a>
+      <a href="index.html#contact" class="contact-button" aria-label="お問い合わせフォーム">お問い合わせ</a>
+    </nav>
   </header>
 
   <div class="detail-container">
@@ -211,6 +264,34 @@
   </div>
 
   <script>
+  // 固定ヘッダー高さの実測反映（index.html と同一ロジック）
+  (function() {
+    const root = document.documentElement;
+    let rafId = null;
+    function updateHeaderHeight() {
+      const header = document.querySelector('header');
+      if (!header || !root) return; // nullチェック
+      const h = Math.ceil(header.getBoundingClientRect().height);
+      const current = parseInt(getComputedStyle(root).getPropertyValue('--header-height'), 10);
+      if (!Number.isFinite(current) || current !== h) {
+        root.style.setProperty('--header-height', h + 'px');
+      }
+    }
+    function onResize() {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => { updateHeaderHeight(); rafId = null; });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      updateHeaderHeight();
+      setTimeout(updateHeaderHeight, 300); // レイアウト安定後に再計測
+      window.addEventListener('resize', onResize, { passive: true });
+    }, { once: true });
+    // クリーンアップ（メモリリーク対策）
+    window.addEventListener('pagehide', () => {
+      window.removeEventListener('resize', onResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    }, { once: true });
+  })();
   // 動画プレビュー機能
   function initVideoPreview() {
     const videoPreview = document.getElementById('videoPreview');
