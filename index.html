@@ -101,8 +101,8 @@
         <div class="project">
           <div class="media-container">
             <img src="images/project_1.jpg" alt="プロジェクトA サムネイル">
-            <video loop muted preload="none">
-              <source src="videos/test.mp4" type="video/mp4">
+            <video loop muted preload="metadata" width="100%" height="100%" style="display: block;">
+              <source src="/videos/test.mp4" type="video/mp4">
               お使いのブラウザは動画の再生をサポートしていません。
             </video>
           </div>
@@ -225,65 +225,115 @@
   <script>
     // マウスオーバーで動画を再生
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOMが読み込まれました');
       const mediaContainers = document.querySelectorAll('.media-container');
       
-      mediaContainers.forEach(container => {
+      mediaContainers.forEach((container, index) => {
+        console.log(`メディアコンテナ #${index + 1} を処理中...`);
         const video = container.querySelector('video');
         const img = container.querySelector('img');
-        if (!video || !img) return;
+        
+        if (!video) {
+          console.error('動画要素が見つかりません');
+          return;
+        }
+        if (!img) {
+          console.error('画像要素が見つかりません');
+          return;
+        }
 
+        // 動画の情報をログに出力
+        console.log(`動画ソース: ${video.querySelector('source')?.src}`);
+        console.log(`動画の準備状態: ${video.readyState} (0=HAVE_NOTHING, 1=HAVE_METADATA, 2=HAVE_CURRENT_DATA, 3=HAVE_FUTURE_DATA, 4=HAVE_ENOUGH_DATA)`);
+        
         // 動画の読み込みチェック
         const checkVideo = () => {
+          console.log(`動画の読み込み状態チェック: ${video.readyState}`);
           // 動画のメタデータを取得
           if (video.readyState >= 1) { // HAVE_ENOUGH_DATA
+            console.log('動画のメタデータが利用可能です');
             // 動画が利用可能な場合
             video.style.opacity = '0';
             video.style.pointerEvents = 'none';
             
-            container.addEventListener('mouseenter', function onMouseEnter() {
-              video.play().catch(e => {
-                console.log('動画の再生に失敗しました:', e);
+            const onMouseEnter = function() {
+              console.log('マウスオーバー: 動画再生を試みます');
+              video.play().then(() => {
+                console.log('動画の再生に成功しました');
+              }).catch(e => {
+                console.error('動画の再生に失敗しました:', e);
                 // 再生に失敗した場合も画像を表示
                 video.style.opacity = '0';
                 img.style.opacity = '1';
               });
-            });
+            };
             
-            container.addEventListener('mouseleave', function onMouseLeave() {
+            const onMouseLeave = function() {
+              console.log('マウスアウト: 動画を一時停止');
               video.pause();
               video.currentTime = 0;
               video.style.opacity = '0';
               img.style.opacity = '1';
-            });
+            };
+
+            // イベントリスナーを削除してから追加（重複防止）
+            container.removeEventListener('mouseenter', onMouseEnter);
+            container.removeEventListener('mouseleave', onMouseLeave);
+            container.addEventListener('mouseenter', onMouseEnter);
+            container.addEventListener('mouseleave', onMouseLeave);
 
             // 動画の再生状態に応じて画像の表示を切り替え
-            video.addEventListener('play', () => {
+            const onPlay = () => {
+              console.log('動画再生中');
               video.style.opacity = '1';
               img.style.opacity = '0';
-            });
+            };
+
+            video.addEventListener('play', onPlay);
 
             // 一度設定したらイベントリスナーを削除
             video.removeEventListener('loadeddata', checkVideo);
           }
         };
 
-        // 動画の読み込みが完了したらチェック
-        if (video.readyState >= 1) {
-          checkVideo();
-        } else {
-          video.addEventListener('loadeddata', checkVideo);
-        }
-        
-        // 動画の読み込みに失敗した場合の処理
-        video.addEventListener('error', function() {
-          console.log('動画の読み込みに失敗しました:', video.querySelector('source').src);
+        // エラーハンドリング
+        const handleError = function(e) {
+          console.error('動画の読み込みに失敗しました:', {
+            src: video.querySelector('source')?.src,
+            error: e,
+            readyState: video.readyState,
+            networkState: video.networkState,
+            errorState: video.error
+          });
           // 動画を非表示にし、画像を表示
           video.style.display = 'none';
           img.style.opacity = '1';
           // マウスオーバー時のイベントを削除
           container.onmouseenter = null;
           container.onmouseleave = null;
-        });
+        };
+
+        // 動画の読み込みが完了したらチェック
+        if (video.readyState >= 1) {
+          console.log('動画はすでに読み込み済みです');
+          checkVideo();
+        } else {
+          console.log('動画の読み込みを待機中...');
+          video.addEventListener('loadeddata', checkVideo);
+          video.addEventListener('error', handleError);
+        }
+        
+        // 初期状態でエラーチェック
+        setTimeout(() => {
+          if (video.readyState === 0) { // HAVE_NOTHING
+            console.warn('動画の読み込みが開始されていません。preload属性を確認してください。');
+          }
+        }, 1000);
+      });
+      
+      // グローバルなエラーハンドラ
+      window.addEventListener('error', function(e) {
+        console.error('グローバルエラー:', e);
       });
     });
   </script>

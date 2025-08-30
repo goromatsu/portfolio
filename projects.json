@@ -3,7 +3,7 @@
     "id": "1",
     "title": "BALLISTIC TRAINING (バリスティック練習マップ)",
     "tech": "UEFN,Verse,Fortnite",
-    "videoId": "YOUTUBE_ID_1",
+    "videoId": "test.mp4",
     "roles": [
       "ゲームデザイン・実装全般",
       "UI/UXデザイン",
@@ -23,7 +23,8 @@
       },
       {
         "title": "NPC移動パターン生成",
-        "description": "トラッキング練習用に、NPCの移動パターンを自動生成するシステム"
+        "description": "トラッキング練習用に、NPCの移動パターンを自動生成するシステム",
+        "video": "videos/test.mp4"
       }
     ]
   },

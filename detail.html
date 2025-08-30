@@ -28,6 +28,7 @@
       margin-top: 1rem;
     }
     .system-card {
+      position: relative;
       background: #1a1a1a;
       border-radius: 8px;
       padding: 1.25rem;
@@ -68,6 +69,108 @@
       color: #78f2c3;
       white-space: nowrap;
     }
+    
+    /* 動画プレビュー用スタイル */
+    .video-preview {
+      position: fixed;
+      width: 320px;
+      height: 220px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease-out;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .video-preview.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .video-preview-header {
+      padding: 0px 0px;
+      background: #222;
+      border-bottom: 0px solid #2a2a2a;
+      font-size: 0.0rem;
+      color: #78f2c3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .video-preview-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0 5px;
+      line-height: 1;
+    }
+    
+    .video-preview-close:hover {
+      color: #fff;
+    }
+    
+    .video-preview-content {
+      width: 100%;
+      height: 180px;
+      background: #000;
+      overflow: hidden;
+    }
+    
+    .video-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    
+    .video-preview-close {
+      display: none; /* 閉じるボタンを非表示 */
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .video-preview-close:hover {
+      color: #78f2c3;
+    }
+    
+    .system-card {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    .system-card:hover .system-video-hint {
+      opacity: 1;
+    }
+    
+    .system-video-hint {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #78f2c3;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
     @media (max-width:600px) { header { flex-direction:column; align-items:flex-start; } header a { margin-top:0.5rem; } .detail-container { gap:1rem; } }
   </style>
 </head>
@@ -95,8 +198,162 @@
     <!-- 仕様工夫とシステム工夫 -->
     <div class="description-container" id="box-details"></div>
   </div>
+  
+  <!-- 動画プレビュー用の要素 -->
+  <div class="video-preview" id="videoPreview">
+    <div class="video-preview-header">
+      <span class="video-title">プレビュー</span>
+      <button class="video-preview-close">&times;</button>
+    </div>
+    <div class="video-preview-content">
+      <video id="previewVideo" autoplay muted loop></video>
+    </div>
+  </div>
 
   <script>
+  // 動画プレビュー機能
+  function initVideoPreview() {
+    const videoPreview = document.getElementById('videoPreview');
+    const previewVideo = document.getElementById('previewVideo');
+    const closeBtn = document.querySelector('.video-preview-close');
+    const videoTitle = document.querySelector('.video-title');
+    let currentVideo = null;
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    // システムカードにマウスが乗った時の処理
+    document.querySelectorAll('.system-card').forEach(card => {
+      card.addEventListener('mouseenter', (e) => {
+        const videoSrc = card.getAttribute('data-video');
+        if (!videoSrc) return;
+        
+        // カードの位置を取得
+        const cardRect = card.getBoundingClientRect();
+        const previewWidth = 320;
+        const previewHeight = 180;
+        const offset = 10;
+        
+        // カードの上中央に表示する位置を計算
+        let left = cardRect.left + (cardRect.width - previewWidth) / 2;
+        let top = cardRect.top - previewHeight - offset;
+        
+        // 画面左端からのはみ出しを防止
+        if (left < 10) left = 10;
+        // 画面右端からのはみ出しを防止
+        if (left + previewWidth > window.innerWidth - 10) {
+          left = window.innerWidth - previewWidth - 10;
+        }
+        
+        // 画面の上端からはみ出る場合は下に表示
+        if (top < 10) {
+          top = cardRect.bottom + offset;
+        }
+        
+        // 位置を設定（固定位置で指定）
+        videoPreview.style.position = 'fixed';
+        videoPreview.style.left = `${left}px`;
+        videoPreview.style.top = `${top}px`;
+        videoPreview.style.width = `${previewWidth}px`;
+        videoPreview.style.height = `${previewHeight}px`;
+        
+        // 動画プレビューをドキュメントに追加（まだ追加されていない場合）
+        if (!document.body.contains(videoPreview)) {
+          document.body.appendChild(videoPreview);
+        }
+      });
+      
+      // カードからマウスが離れたら動画を非表示
+      card.addEventListener('mouseleave', () => {
+        videoPreview.classList.remove('active');
+        if (currentVideo) {
+          currentVideo.pause();
+          currentVideo.currentTime = 0;
+        }
+      });
+    });
+    
+    
+    // 動画プレビューを閉じる
+    function closePreview() {
+      if (currentVideo) {
+        currentVideo.pause();
+        currentVideo.currentTime = 0;
+        currentVideo = null;
+      }
+      videoPreview.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+    
+    // 閉じるボタンのイベント
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closePreview();
+    });
+    
+    // プレビュー外をクリックしても閉じる
+    videoPreview.addEventListener('click', (e) => {
+      if (e.target === videoPreview) {
+        closePreview();
+      }
+    });
+    
+    // ESCキーで閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePreview();
+      }
+    });
+    
+    // システムカードにマウスオーバーで動画を再生
+    document.querySelectorAll('.system-card[data-video]').forEach(card => {
+      const videoSrc = card.getAttribute('data-video');
+      if (!videoSrc) return;
+      
+      // マウスオーバー時に動画をロード
+      card.addEventListener('mouseenter', () => {
+        // 既に再生中の動画があれば停止
+        if (currentVideo) {
+          currentVideo.pause();
+          currentVideo.currentTime = 0;
+        }
+        
+        // 新しい動画を設定
+        videoTitle.textContent = card.querySelector('h4').textContent;
+        previewVideo.src = videoSrc;
+        currentVideo = previewVideo;
+        
+        // 動画のメタデータが読み込めたら再生
+        const onLoaded = () => {
+          previewVideo.play().catch(e => {
+            console.error('動画の再生に失敗しました:', e);
+          });
+          previewVideo.removeEventListener('loadeddata', onLoaded);
+        };
+        
+        previewVideo.addEventListener('loadeddata', onLoaded);
+        
+        // エラーハンドリング
+        const onError = () => {
+          console.error('動画の読み込みに失敗しました:', videoSrc);
+          previewVideo.removeEventListener('error', onError);
+        };
+        
+        previewVideo.addEventListener('error', onError);
+        
+        // プレビューを表示
+        videoPreview.classList.add('active');
+        
+        // 動画の読み込みが完了したら再生
+        previewVideo.oncanplay = () => {
+          previewVideo.play().catch(e => console.error('自動再生に失敗しました:', e));
+        };
+      });
+      
+      // 動画の読み込みと再生はこのまま
+    });
+  }
+  
+  // メインの処理
   (async () => {
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
@@ -136,8 +393,8 @@
       </ul>`;
 
     // プロジェクト概要と実装システム一覧
-    const systemsHtml = data.systems ? data.systems.map(system => `
-      <div class="system-card">
+    const systemsHtml = data.systems ? data.systems.map((system, index) => `
+      <div class="system-card" data-video="${system.video || ''}">
         <h4>${system.title || 'システム'}</h4>
         <p style="margin: 0; color: #e0e0e0; font-size: 0.95rem; line-height: 1.5;">${system.description || system}</p>
       </div>
@@ -154,7 +411,14 @@
         <div class="systems-grid">
           ${systemsHtml}
         </div>
+        
+        <div style="margin-top: 1rem; font-size: 0.85rem; color: #888; text-align: right;">
+          ※ カードにマウスオーバーすると動画が再生されます
+        </div>
       </div>`;
+      
+      // 動画プレビュー機能を初期化
+      initVideoPreview();
   })();
   </script>
 </body>
