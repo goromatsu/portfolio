@@ -16,24 +16,39 @@
     "overview": "FPSのエイム練習に特化したゲーム。トラッキング、ピーキング、PvE、PvP練習も可能。処理負荷とメモリサイズを抑え、最小限の要素で構築。ランクマッチ前などのウォーミングアップの利用を想定。",
     "systems": [
       {
+        "title": "BOTランダムリスポーン",
+        "description": "撃破で指定範囲内のランダム位置にリスポーン",
+        "video": "videos/p1_botspawn.mp4"
+      },
+      {
         "title": "BOT最適化",
-        "description": "エリア毎にAIスポーンを制御し、プレイヤーのいないエリアでスポーンしないよう設定"
+        "description": "エリア毎にAIスポーンを制御し、プレイヤーのいないエリアでスポーンしないよう設定",
+        "video": "videos/p1_areaspawn.mp4"
       },
       {
         "title": "AI挙動制御",
-        "description": "指定距離内をランダム往復"
+        "description": "指定距離内をランダム往復",
+        "video": "videos/p1_aimove.mp4"
       },
       {
         "title": "オプションメニュー",
-        "description": "弾薬無限 ON / OFF , 各種エリアにテレポート"
+        "description": "弾薬無限 ON / OFF , 各種エリアにテレポート",
+        "video": "videos/p1_option.mp4"
       },
       {
         "title": "選択方式チーム分け",
-        "description": "セッション内で自由にチームを組み、PvP戦を練習可能"
+        "description": "セッション内で自由にチームを組み、PvP戦を練習可能",
+        "video": "videos/p1_team.mp4"
       },
       {
         "title": "マテリアル作成",
-        "description": "外観の統一感を出すためのマテリアル作成"
+        "description": "外観の統一感を出すためのマテリアル作成",
+        "video": "videos/p1_material.mp4"
+      },
+      {
+        "title": "武器ピックアップシステム",
+        "description": "アップデートでの新武器追加の容易さと、ゲーム内での一覧性を考慮",
+        "video": "videos/p1_weapon.mp4"
       }
     ]
   },
