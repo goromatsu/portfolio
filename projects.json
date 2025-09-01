@@ -70,23 +70,28 @@
     "systems": [
       {
         "title": "素材ピックアップ処理",
-        "description": "見た目モデルとデータを設定し、指定した素材を取得"
+        "description": "見た目モデルとデータを設定し、指定した素材を取得",
+        "video": "videos/p2_pickup.mp4"
       },
       {
         "title": "素材判定処理",
-        "description": "正しい素材を持っているかの判定"
+        "description": "正しい素材を持っているかの判定",
+        "video": "videos/p2_check.mp4"
       },
       {
         "title": "ランダムオーダー",
-        "description": "データテーブルを用意し、遊ぶたびランダムでオーダー内容が変わる"
+        "description": "データテーブルを用意し、遊ぶたびランダムでオーダー内容が変わる",
+        "video": "videos/p2_random_order.mp4"
       },
       {
         "title": "タイムアタックモード",
-        "description": "時間内に注文をさばくモード。参加人数によって難易度が変化する"
+        "description": "時間内に注文をさばくモード。参加人数によって難易度が変化する",
+        "video": "videos/p2_timeattack.mp4"
       },
       {
         "title": "フリーモード",
-        "description": "時間無制限で遊べるモード"
+        "description": "時間無制限で遊べるモード",
+        "video": "videos/p2_free.mp4"
       }
     ]
   },
