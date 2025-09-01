@@ -115,15 +115,18 @@
     "systems": [
       {
         "title": "アイテムドロップシステム",
-        "description": "オブジェクト攻撃時アイテム取得。エフェクト再生"
+        "description": "オブジェクト攻撃時アイテム取得。エフェクト再生",
+        "video": "videos/p3_itemget.mp4"
       },
       {
         "title": "段階的アップグレード",
-        "description": "拠点拡張の順番を制御し、リニアに難易度を上げるシステム"
+        "description": "拠点拡張の順番を制御し、リニアに難易度を上げるシステム",
+        "video": "videos/p3_update.mp4"
       },
       {
         "title": "アイテム換金",
-        "description": "所持アイテムを自動で判定し、すべて売却する"
+        "description": "所持アイテムを自動で判定し、すべて売却する",
+        "video": "videos/p3_exchange.mp4"
       }
     ]
   },
@@ -145,19 +148,22 @@
     "systems": [
       {
         "title": "ランダムエリアシャッフル",
-        "description": "セッション毎に進行エリアの順序がランダムに変化。周回プレイを想定"
+        "description": "エリアをモジュールとして小さな単位で作成し、セッション毎に順序がランダムに変化するよう実装。新エリアの追加が簡単",
+        "video": "videos/p4_area_random.mp4"
       },
       {
         "title": "ステータス強化",
-        "description": "HP、攻撃力、回復薬クールタイム短縮。強化用UI表示"
+        "description": "HP、攻撃力、回復薬クールタイム短縮。強化用UI表示",
+        "video": "videos/p4_ui.mp4"
       },
       {
         "title": "アイテムドロップ",
-        "description": "敵撃破時、レアリティに応じた確率で武器ランダムドロップ"
+        "description": "敵撃破時、レアリティに応じた確率で武器ランダムドロップ",
+        "video": "videos/p4_dropweapon.mp4"
       },
       {
-        "title": "セーブ機能",
-        "description": "ステージクリア進捗、ステータス保存"
+        "title": "オートセーブ機能",
+        "description": "ステージクリア進捗、ステータス自動保存"
       }
     ]
   },
@@ -181,22 +187,21 @@
     "systems": [
       {
         "title": "宝箱",
-        "description": "素材ランダムゲット。個数、アイテム種別はレアリティ毎に確率設定"
+        "description": "素材ランダムゲット。個数、アイテム種別はレアリティ毎に確率設定",
+        "video": "videos/p5_tresure.mp4"
       },
       {
-        "title": "クラフトシステム",
-        "description": "素材を消費して武器のクラフト。クラフトアイテムを一覧で取得可能なデータテーブルを用意"
-      },
-      {
-        "title": "クラフトUI",
-        "description": "クラフト用の独自UI。所持レシピ一覧表示、素材消費数表示"
+        "title": "クラフトシステム・UI",
+        "description": "素材を消費して武器のクラフト。クラフトアイテムを一覧で取得可能なデータテーブルを用意。所持レシピ一覧表示、素材消費数表示",
+        "video": "videos/p5_craft.mp4"
       },
       {
         "title": "レシピ管理",
-        "description": "レシピ取得時アンロック。UIにも反映"
+        "description": "レシピ取得時アンロック。UIにも反映",
+        "video": "videos/p5_recipi.mp4"
       },
       {
-        "title": "セーブ機能",
+        "title": "オートセーブ機能",
         "description": "所持レシピ、到達エリアの保存"
       }
     ]
