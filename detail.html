@@ -11,6 +11,7 @@
 -->
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,10 +24,13 @@
       --primary-color: #78f2c3;
       --secondary-color: #007ACC;
       --meta-text: #ccc;
-      --header-height: 80px; /* 初期値。JSで実測して上書き */
+      --header-height: 80px;
+      /* 初期値。JSで実測して上書き */
     }
 
-    html { scroll-padding-top: var(--header-height); }
+    html {
+      scroll-padding-top: var(--header-height);
+    }
 
     body {
       margin: 0;
@@ -34,44 +38,164 @@
       color: var(--text-color);
       font-family: 'Segoe UI', sans-serif;
       line-height: 1.6;
-      padding-top: var(--header-height); /* 固定ヘッダー分のスペース */
+      padding-top: var(--header-height);
+      /* 固定ヘッダー分のスペース */
     }
 
     /* ヘッダー（index.html と統一） */
     header {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       background-color: rgba(15, 15, 15, 0.95);
       padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
       z-index: 1000;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    header h1 { margin:0; color: var(--primary-color); font-size: 1.6rem; }
-    header a { color: #f2f2f2; text-decoration: none; font-size: 1rem; position: relative; padding: 0.5rem 0; }
-    header a::after { content:''; position:absolute; left:0; bottom:0; height:2px; width:0; background:#f2f2f2; transition:width .3s ease; }
-    header a:hover::after, header a:focus::after { width:100%; }
-    .links { display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center; }
-    .detail-container { max-width:960px; margin:2rem auto; padding:0 1rem; display:flex; flex-direction:column; gap:1.5rem; }
-    .video-container { position:relative; width:100%; padding-top:56.25%; background:#111; border-radius:8px; overflow:hidden; }
-    .video-container img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
-    .metrics { display:flex; flex-wrap:wrap; gap:0.5rem; }
-    .metrics span { background:#78f2c3; color:#000; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.85rem; }
-    .info-boxes { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
-    .info-box { background:#1a1a1a; border-radius:6px; padding:0.75rem; }
-    .info-box h3 { margin:0 0 0.4rem; color:#78f2c3; font-size:1rem; }
-    .info-box ul { margin:0; padding-left:1rem; color:#ccc; font-size:0.85rem; }
-    .info-box ul li { margin-bottom:0.4rem; }
-    .info-box p { margin:0; color:#ccc; font-size:0.9rem; }
-    .description-container { background:#0f0f0f; border-radius:6px; padding:1.5rem; }
+
+    header h1 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1.6rem;
+    }
+
+    .header-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+      white-space: nowrap;
+    }
+
+    header a {
+      color: #f2f2f2;
+      text-decoration: none;
+      font-size: 1rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    header a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 0;
+      background: #f2f2f2;
+      transition: width .3s ease;
+    }
+
+    header a:hover::after,
+    header a:focus::after {
+      width: 100%;
+    }
+
+    .links {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .detail-container {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #111;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .video-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .metrics span {
+      background: #78f2c3;
+      color: #000;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    .info-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .info-box {
+      background: #1a1a1a;
+      border-radius: 6px;
+      padding: 0.75rem;
+    }
+
+    .info-box h3 {
+      margin: 0 0 0.4rem;
+      color: #78f2c3;
+      font-size: 1rem;
+    }
+
+    .info-box ul {
+      margin: 0;
+      padding-left: 1rem;
+      color: #ccc;
+      font-size: 0.85rem;
+    }
+
+    .info-box ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .info-box p {
+      margin: 0;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .description-container {
+      background: #0f0f0f;
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+
     .systems-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1rem;
       margin-top: 1rem;
     }
+
     .system-card {
       position: relative;
       background: #1a1a1a;
@@ -80,10 +204,12 @@
       border-left: 4px solid #78f2c3;
       transition: transform 0.2s, box-shadow 0.2s;
     }
+
     .system-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
+
     .system-card h4 {
       margin: 0 0 0.5rem 0;
       color: #78f2c3;
@@ -92,29 +218,42 @@
       align-items: center;
       gap: 0.5rem;
     }
+
     .system-card h4::before {
       content: '⚙️';
       font-size: 1.2em;
     }
-    .description-container h3 { margin:0 0 0.75rem; color:#78f2c3; font-size:1.1rem; }
-    .description-container p { margin-bottom:1rem; color:#ccc; font-size:0.9rem; }
-    .tech-tags { 
+
+    .description-container h3 {
+      margin: 0 0 0.75rem;
+      color: #78f2c3;
+      font-size: 1.1rem;
+    }
+
+    .description-container p {
+      margin-bottom: 1rem;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .tech-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       margin: 1rem 0;
     }
-    .tech-tag { 
+
+    .tech-tag {
       display: inline-flex;
       align-items: center;
-      border: 1px solid #78f2c3; 
-      border-radius: 4px; 
-      padding: 0.25rem 0.75rem; 
-      font-size: 0.9rem; 
+      border: 1px solid #78f2c3;
+      border-radius: 4px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.9rem;
       color: #78f2c3;
       white-space: nowrap;
     }
-    
+
     /* 動画プレビュー用スタイル */
     .video-preview {
       position: fixed;
@@ -132,13 +271,13 @@
       pointer-events: none;
       overflow: hidden;
     }
-    
+
     .video-preview.active {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-    
+
     .video-preview-header {
       padding: 0px 0px;
       background: #222;
@@ -149,7 +288,7 @@
       justify-content: space-between;
       align-items: center;
     }
-    
+
     .video-preview-close {
       background: none;
       border: none;
@@ -159,27 +298,28 @@
       padding: 0 5px;
       line-height: 1;
     }
-    
+
     .video-preview-close:hover {
       color: #fff;
     }
-    
+
     .video-preview-content {
       width: 100%;
       height: 180px;
       background: #000;
       overflow: hidden;
     }
-    
+
     .video-preview video {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
     }
-    
+
     .video-preview-close {
-      display: none; /* 閉じるボタンを非表示 */
+      display: none;
+      /* 閉じるボタンを非表示 */
       position: absolute;
       top: 0px;
       right: 0px;
@@ -188,21 +328,21 @@
       cursor: pointer;
       transition: color 0.2s;
     }
-    
+
     .video-preview-close:hover {
       color: #78f2c3;
     }
-    
+
     .system-card {
       position: relative;
       cursor: pointer;
       overflow: hidden;
     }
-    
+
     .system-card:hover .system-video-hint {
       opacity: 1;
     }
-    
+
     .system-video-hint {
       position: absolute;
       top: 10px;
@@ -216,17 +356,51 @@
       transition: opacity 0.2s;
       pointer-events: none;
     }
+
     @media (max-width:600px) {
-      :root { --header-height: 120px; }
-      header { flex-direction: column; align-items: flex-start; }
-      header a { margin-top: 0.5rem; }
-      .detail-container { gap: 1rem; }
+      :root {
+        --header-height: 120px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .header-center {
+        position: static;
+        transform: none;
+        margin: 0.5rem 0;
+        order: 2;
+      }
+
+      header h1 {
+        order: 1;
+        text-align: center;
+        width: 100%;
+      }
+
+      nav.links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+      }
+
+      header a {
+        margin-top: 0.5rem;
+      }
+
+      .detail-container {
+        gap: 1rem;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Goromatsu</h1>
+    <div class="header-center">UEFN - GAMES</div>
     <nav class="links" aria-label="メインナビゲーション">
       <a href="index.html">← プロジェクト一覧へ戻る</a>
       <a href="index.html#contact" class="contact-button" aria-label="お問い合わせフォーム">お問い合わせ</a>
@@ -251,7 +425,7 @@
     <!-- 仕様工夫とシステム工夫 -->
     <div class="description-container" id="box-details"></div>
   </div>
-  
+
   <!-- 動画プレビュー用の要素 -->
   <div class="video-preview" id="videoPreview">
     <div class="video-preview-header">
@@ -264,224 +438,224 @@
   </div>
 
   <script>
-  // 固定ヘッダー高さの実測反映（index.html と同一ロジック）
-  (function() {
-    const root = document.documentElement;
-    let rafId = null;
-    function updateHeaderHeight() {
-      const header = document.querySelector('header');
-      if (!header || !root) return; // nullチェック
-      const h = Math.ceil(header.getBoundingClientRect().height);
-      const current = parseInt(getComputedStyle(root).getPropertyValue('--header-height'), 10);
-      if (!Number.isFinite(current) || current !== h) {
-        root.style.setProperty('--header-height', h + 'px');
+    // 固定ヘッダー高さの実測反映（index.html と同一ロジック）
+    (function () {
+      const root = document.documentElement;
+      let rafId = null;
+      function updateHeaderHeight() {
+        const header = document.querySelector('header');
+        if (!header || !root) return; // nullチェック
+        const h = Math.ceil(header.getBoundingClientRect().height);
+        const current = parseInt(getComputedStyle(root).getPropertyValue('--header-height'), 10);
+        if (!Number.isFinite(current) || current !== h) {
+          root.style.setProperty('--header-height', h + 'px');
+        }
       }
-    }
-    function onResize() {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => { updateHeaderHeight(); rafId = null; });
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      updateHeaderHeight();
-      setTimeout(updateHeaderHeight, 300); // レイアウト安定後に再計測
-      window.addEventListener('resize', onResize, { passive: true });
-    }, { once: true });
-    // クリーンアップ（メモリリーク対策）
-    window.addEventListener('pagehide', () => {
-      window.removeEventListener('resize', onResize);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    }, { once: true });
-  })();
-  // 動画プレビュー機能
-  function initVideoPreview() {
-    const videoPreview = document.getElementById('videoPreview');
-    const previewVideo = document.getElementById('previewVideo');
-    const closeBtn = document.querySelector('.video-preview-close');
-    const videoTitle = document.querySelector('.video-title');
-    let currentVideo = null;
-    let mouseX = 0;
-    let mouseY = 0;
-    
-    // システムカードにマウスが乗った時の処理
-    document.querySelectorAll('.system-card').forEach(card => {
-      card.addEventListener('mouseenter', (e) => {
+      function onResize() {
+        if (rafId !== null) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => { updateHeaderHeight(); rafId = null; });
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        updateHeaderHeight();
+        setTimeout(updateHeaderHeight, 300); // レイアウト安定後に再計測
+        window.addEventListener('resize', onResize, { passive: true });
+      }, { once: true });
+      // クリーンアップ（メモリリーク対策）
+      window.addEventListener('pagehide', () => {
+        window.removeEventListener('resize', onResize);
+        if (rafId !== null) cancelAnimationFrame(rafId);
+      }, { once: true });
+    })();
+    // 動画プレビュー機能
+    function initVideoPreview() {
+      const videoPreview = document.getElementById('videoPreview');
+      const previewVideo = document.getElementById('previewVideo');
+      const closeBtn = document.querySelector('.video-preview-close');
+      const videoTitle = document.querySelector('.video-title');
+      let currentVideo = null;
+      let mouseX = 0;
+      let mouseY = 0;
+
+      // システムカードにマウスが乗った時の処理
+      document.querySelectorAll('.system-card').forEach(card => {
+        card.addEventListener('mouseenter', (e) => {
+          const videoSrc = card.getAttribute('data-video');
+          if (!videoSrc) return;
+
+          // カードの位置を取得
+          const cardRect = card.getBoundingClientRect();
+          const previewWidth = 320;
+          const previewHeight = 180;
+          const offset = 10;
+
+          // カードの上中央に表示する位置を計算
+          let left = cardRect.left + (cardRect.width - previewWidth) / 2;
+          let top = cardRect.top - previewHeight - offset;
+
+          // 画面左端からのはみ出しを防止
+          if (left < 10) left = 10;
+          // 画面右端からのはみ出しを防止
+          if (left + previewWidth > window.innerWidth - 10) {
+            left = window.innerWidth - previewWidth - 10;
+          }
+
+          // 画面の上端からはみ出る場合は下に表示
+          if (top < 10) {
+            top = cardRect.bottom + offset;
+          }
+
+          // 位置を設定（固定位置で指定）
+          videoPreview.style.position = 'fixed';
+          videoPreview.style.left = `${left}px`;
+          videoPreview.style.top = `${top}px`;
+          videoPreview.style.width = `${previewWidth}px`;
+          videoPreview.style.height = `${previewHeight}px`;
+
+          // 動画プレビューをドキュメントに追加（まだ追加されていない場合）
+          if (!document.body.contains(videoPreview)) {
+            document.body.appendChild(videoPreview);
+          }
+        });
+
+        // カードからマウスが離れたら動画を非表示
+        card.addEventListener('mouseleave', () => {
+          videoPreview.classList.remove('active');
+          if (currentVideo) {
+            currentVideo.pause();
+            currentVideo.currentTime = 0;
+          }
+        });
+      });
+
+
+      // 動画プレビューを閉じる
+      function closePreview() {
+        if (currentVideo) {
+          currentVideo.pause();
+          currentVideo.currentTime = 0;
+          currentVideo = null;
+        }
+        videoPreview.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+
+      // 閉じるボタンのイベント
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closePreview();
+      });
+
+      // プレビュー外をクリックしても閉じる
+      videoPreview.addEventListener('click', (e) => {
+        if (e.target === videoPreview) {
+          closePreview();
+        }
+      });
+
+      // ESCキーで閉じる
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closePreview();
+        }
+      });
+
+      // システムカードにマウスオーバーで動画を再生
+      document.querySelectorAll('.system-card[data-video]').forEach(card => {
         const videoSrc = card.getAttribute('data-video');
         if (!videoSrc) return;
-        
-        // カードの位置を取得
-        const cardRect = card.getBoundingClientRect();
-        const previewWidth = 320;
-        const previewHeight = 180;
-        const offset = 10;
-        
-        // カードの上中央に表示する位置を計算
-        let left = cardRect.left + (cardRect.width - previewWidth) / 2;
-        let top = cardRect.top - previewHeight - offset;
-        
-        // 画面左端からのはみ出しを防止
-        if (left < 10) left = 10;
-        // 画面右端からのはみ出しを防止
-        if (left + previewWidth > window.innerWidth - 10) {
-          left = window.innerWidth - previewWidth - 10;
-        }
-        
-        // 画面の上端からはみ出る場合は下に表示
-        if (top < 10) {
-          top = cardRect.bottom + offset;
-        }
-        
-        // 位置を設定（固定位置で指定）
-        videoPreview.style.position = 'fixed';
-        videoPreview.style.left = `${left}px`;
-        videoPreview.style.top = `${top}px`;
-        videoPreview.style.width = `${previewWidth}px`;
-        videoPreview.style.height = `${previewHeight}px`;
-        
-        // 動画プレビューをドキュメントに追加（まだ追加されていない場合）
-        if (!document.body.contains(videoPreview)) {
-          document.body.appendChild(videoPreview);
-        }
+
+        // マウスオーバー時に動画をロード
+        card.addEventListener('mouseenter', () => {
+          // 既に再生中の動画があれば停止
+          if (currentVideo) {
+            currentVideo.pause();
+            currentVideo.currentTime = 0;
+          }
+
+          // 新しい動画を設定
+          videoTitle.textContent = card.querySelector('h4').textContent;
+          previewVideo.src = videoSrc;
+          currentVideo = previewVideo;
+
+          // 動画のメタデータが読み込めたら再生
+          const onLoaded = () => {
+            previewVideo.play().catch(e => {
+              console.error('動画の再生に失敗しました:', e);
+            });
+            previewVideo.removeEventListener('loadeddata', onLoaded);
+          };
+
+          previewVideo.addEventListener('loadeddata', onLoaded);
+
+          // エラーハンドリング
+          const onError = () => {
+            console.error('動画の読み込みに失敗しました:', videoSrc);
+            previewVideo.removeEventListener('error', onError);
+          };
+
+          previewVideo.addEventListener('error', onError);
+
+          // プレビューを表示
+          videoPreview.classList.add('active');
+
+          // 動画の読み込みが完了したら再生
+          previewVideo.oncanplay = () => {
+            previewVideo.play().catch(e => console.error('自動再生に失敗しました:', e));
+          };
+        });
+
+        // 動画の読み込みと再生はこのまま
       });
-      
-      // カードからマウスが離れたら動画を非表示
-      card.addEventListener('mouseleave', () => {
-        videoPreview.classList.remove('active');
-        if (currentVideo) {
-          currentVideo.pause();
-          currentVideo.currentTime = 0;
-        }
-      });
-    });
-    
-    
-    // 動画プレビューを閉じる
-    function closePreview() {
-      if (currentVideo) {
-        currentVideo.pause();
-        currentVideo.currentTime = 0;
-        currentVideo = null;
-      }
-      videoPreview.classList.remove('active');
-      document.body.style.overflow = 'auto';
     }
-    
-    // 閉じるボタンのイベント
-    closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closePreview();
-    });
-    
-    // プレビュー外をクリックしても閉じる
-    videoPreview.addEventListener('click', (e) => {
-      if (e.target === videoPreview) {
-        closePreview();
-      }
-    });
-    
-    // ESCキーで閉じる
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closePreview();
-      }
-    });
-    
-    // システムカードにマウスオーバーで動画を再生
-    document.querySelectorAll('.system-card[data-video]').forEach(card => {
-      const videoSrc = card.getAttribute('data-video');
-      if (!videoSrc) return;
-      
-      // マウスオーバー時に動画をロード
-      card.addEventListener('mouseenter', () => {
-        // 既に再生中の動画があれば停止
-        if (currentVideo) {
-          currentVideo.pause();
-          currentVideo.currentTime = 0;
-        }
-        
-        // 新しい動画を設定
-        videoTitle.textContent = card.querySelector('h4').textContent;
-        previewVideo.src = videoSrc;
-        currentVideo = previewVideo;
-        
-        // 動画のメタデータが読み込めたら再生
-        const onLoaded = () => {
-          previewVideo.play().catch(e => {
-            console.error('動画の再生に失敗しました:', e);
-          });
-          previewVideo.removeEventListener('loadeddata', onLoaded);
-        };
-        
-        previewVideo.addEventListener('loadeddata', onLoaded);
-        
-        // エラーハンドリング
-        const onError = () => {
-          console.error('動画の読み込みに失敗しました:', videoSrc);
-          previewVideo.removeEventListener('error', onError);
-        };
-        
-        previewVideo.addEventListener('error', onError);
-        
-        // プレビューを表示
-        videoPreview.classList.add('active');
-        
-        // 動画の読み込みが完了したら再生
-        previewVideo.oncanplay = () => {
-          previewVideo.play().catch(e => console.error('自動再生に失敗しました:', e));
-        };
-      });
-      
-      // 動画の読み込みと再生はこのまま
-    });
-  }
-  
-  // メインの処理
-  (async () => {
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
-    if (!id) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">ID が指定されていません</p>'; return; }
 
-    let projects;
-    try { const resp = await fetch('projects.json'); projects = await resp.json(); }
-    catch { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">projects.json の読み込みに失敗しました</p>'; return; }
+    // メインの処理
+    (async () => {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      if (!id) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">ID が指定されていません</p>'; return; }
 
-    const data = projects.find(p => p.id === id);
-    if (!data) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">プロジェクトが見つかりません (id=' + id + ')</p>'; return; }
+      let projects;
+      try { const resp = await fetch('projects.json'); projects = await resp.json(); }
+      catch { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">projects.json の読み込みに失敗しました</p>'; return; }
 
-    // サムネイル画像を設定
-    document.getElementById('projectThumbnail').src = `images/project_${id}.jpg`;
+      const data = projects.find(p => p.id === id);
+      if (!data) { document.body.innerHTML = '<p style="padding:2rem;color:#f77f94;">プロジェクトが見つかりません (id=' + id + ')</p>'; return; }
 
-    // メトリクス設定
-    const metrics = [];
-    // 技術スタックをカンマ区切りで分割してそれぞれをタグとして表示
-    const techItems = data.tech.split(',').map(tech => tech.trim());
-    const techTags = techItems.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
-    document.getElementById('metricsArea').innerHTML = techTags;
+      // サムネイル画像を設定
+      document.getElementById('projectThumbnail').src = `images/project_${id}.jpg`;
 
-    // プロジェクト情報
-    document.getElementById('box-info').innerHTML = `
+      // メトリクス設定
+      const metrics = [];
+      // 技術スタックをカンマ区切りで分割してそれぞれをタグとして表示
+      const techItems = data.tech.split(',').map(tech => tech.trim());
+      const techTags = techItems.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
+      document.getElementById('metricsArea').innerHTML = techTags;
+
+      // プロジェクト情報
+      document.getElementById('box-info').innerHTML = `
       <h3>プロジェクト情報</h3>
       <ul>
         <li>制作人数 : ${data.team}</li>
         <li>制作期間 : ${data.duration}</li>
       </ul>`;
 
-    // 担当作業を配列から改行付きで表示
-    const rolesHtml = data.roles ? data.roles.map(role => `<li>${role}</li>`).join('') : '';
-    document.getElementById('box-overview').innerHTML = `
+      // 担当作業を配列から改行付きで表示
+      const rolesHtml = data.roles ? data.roles.map(role => `<li>${role}</li>`).join('') : '';
+      document.getElementById('box-overview').innerHTML = `
       <h3>担当作業</h3>
       <ul style="list-style-type: none; padding-left: 0; margin: 0;">
         ${rolesHtml}
       </ul>`;
 
-    // プロジェクト概要と実装システム一覧
-    const systemsHtml = data.systems ? data.systems.map((system, index) => `
+      // プロジェクト概要と実装システム一覧
+      const systemsHtml = data.systems ? data.systems.map((system, index) => `
       <div class="system-card" data-video="${system.video || ''}">
         <h4>${system.title || 'システム'}</h4>
         <p style="margin: 0; color: #e0e0e0; font-size: 0.95rem; line-height: 1.5;">${system.description || system}</p>
       </div>
     `).join('') : '';
-    
-    document.getElementById('box-details').innerHTML = `
+
+      document.getElementById('box-details').innerHTML = `
       <div style="margin-bottom: 2rem;">
         <h3>プロジェクト概要</h3>
         <p style="line-height: 1.6;">${data.overview || ''}</p>
@@ -497,10 +671,11 @@
           ※ カードにマウスオーバーすると動画が再生されます
         </div>
       </div>`;
-      
+
       // 動画プレビュー機能を初期化
       initVideoPreview();
-  })();
+    })();
   </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +22,8 @@
 
     body {
       margin: 0;
-      padding-top: var(--header-height); /* 固定ヘッダー分の余白を確保 */
+      padding-top: var(--header-height);
+      /* 固定ヘッダー分の余白を確保 */
       background: var(--bg-color);
       color: var(--text-color);
       font-family: 'Segoe UI', sans-serif;
@@ -55,13 +57,26 @@
       font-size: 1.8rem;
     }
 
+    /* ヘッダー中央テキスト */
+    .header-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+      white-space: nowrap;
+    }
+
     /* ナビゲーションリンク */
     .links {
       display: flex;
       flex-wrap: wrap;
       margin-top: 0.5rem;
-      align-items: center; /* 縦方向の中央揃え */
-      gap: 1rem; /* リンク間の間隔を均一に */
+      align-items: center;
+      /* 縦方向の中央揃え */
+      gap: 1rem;
+      /* リンク間の間隔を均一に */
     }
 
     .links a {
@@ -94,11 +109,11 @@
       text-decoration: none;
       color: var(--text-color);
     }
-    
+
     .project-link:visited {
       color: var(--text-color);
     }
-    
+
     .project-link:hover,
     .project-link:active {
       text-decoration: none;
@@ -107,16 +122,20 @@
     /* ボタン */
     .resume-button {
       background: var(--primary-color);
-      padding: 0.4rem 1rem 0.3rem; /* 上下のパディングを調整 */
+      padding: 0.4rem 1rem 0.3rem;
+      /* 上下のパディングを調整 */
       border: none;
       border-radius: 5px;
       color: var(--bg-color) !important;
       text-decoration: none;
       font-weight: bold;
       display: inline-block;
-      font-size: 1rem; /* フォントサイズをリンクと合わせる */
-      line-height: 1.5; /* 行の高さを調整 */
-      margin-top: 0.1rem; /* 微調整 */
+      font-size: 1rem;
+      /* フォントサイズをリンクと合わせる */
+      line-height: 1.5;
+      /* 行の高さを調整 */
+      margin-top: 0.1rem;
+      /* 微調整 */
     }
 
     /* セクション */
@@ -155,7 +174,8 @@
     .media-container {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 アスペクト比 */
+      padding-top: 56.25%;
+      /* 16:9 アスペクト比 */
       overflow: hidden;
       border-radius: 8px;
       margin-bottom: 1rem;
@@ -193,6 +213,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .media-container img,
       .media-container video {
         transition: none;
@@ -267,6 +288,7 @@
       background: var(--primary-color);
       margin: 0.5rem auto 0;
     }
+
     /* 視覚的に隠す（スクリーンリーダー配慮）*/
     .visually-hidden {
       position: absolute !important;
@@ -276,7 +298,8 @@
       margin: -1px;
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
-      white-space: nowrap; /* 余分な改行を防ぐ */
+      white-space: nowrap;
+      /* 余分な改行を防ぐ */
       border: 0;
     }
 
@@ -290,7 +313,8 @@
     section.contact-section {
       margin-top: 2rem;
       padding-top: 2rem;
-      border-top: 0; /* 線を完全に非表示 */
+      border-top: 0;
+      /* 線を完全に非表示 */
     }
 
     .contact-form {
@@ -370,16 +394,48 @@
 
     /* レスポンシブデザイン */
     @media (max-width: 600px) {
+
       /* モバイルではヘッダーが縦積みになり高さが増えるため上書き */
-      :root { --header-height: 120px; }
+      :root {
+        --header-height: 120px;
+      }
+
       .project-grid {
         grid-template-columns: 1fr;
       }
 
       header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        /* flex-startから変更して全体を中央揃え気味に */
       }
+
+      .header-center {
+        position: static;
+        transform: none;
+        margin: 0.5rem 0;
+        order: 2;
+        /* ロゴの下に配置 */
+      }
+
+      header h1 {
+        font-size: 1.6rem;
+        order: 1;
+        width: 100%;
+        /* 幅を確保して左寄せなどを制御しやすくするが、align-items: centerなら中央に来る */
+        text-align: center;
+        /* モバイルではロゴも中央の方がバランスが良いかもしれないが、既存踏襲なら左？ */
+      }
+
+      /* h1の既存スタイル調整が必要か確認。
+         元のコード: align-items: flex-start;
+         今回: align-items: center;
+         これだとロゴも中央に来ます。
+         ユーザーの要望は「ど真ん中にUEFN - GAMES」なので、モバイルでも中央で良さそう。
+         ロゴの位置を左のままにしたい場合は構造を変える必要がありますが、
+         モバイルでの「ど真ん中」は狭いので縦積みが自然。
+      */
+
 
       header h1 {
         font-size: 1.6rem;
@@ -406,7 +462,7 @@
       .contact-form {
         padding: 0 1rem;
       }
-      
+
       .submit-button {
         width: 100%;
         padding: 0.75rem;
@@ -414,13 +470,18 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Goromatsu</h1>
+    <div class="header-center">UEFN - GAMES</div>
     <nav class="links" aria-label="メインナビゲーション">
-      <a href="https://www.fortnite.com/@goromatsu" target="_blank" rel="noopener noreferrer" aria-label="フォートナイトのプロフィール">Fortnite</a>
-      <a href="https://www.youtube.com/@goromatsu/shorts" target="_blank" rel="noopener noreferrer" aria-label="YouTubeチャンネル">YouTube</a>
-      <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer" aria-label="X（旧Twitter）プロフィール">X(Twitter)</a>
+      <a href="https://www.fortnite.com/@goromatsu" target="_blank" rel="noopener noreferrer"
+        aria-label="フォートナイトのプロフィール">Fortnite</a>
+      <a href="https://www.youtube.com/@goromatsu/shorts" target="_blank" rel="noopener noreferrer"
+        aria-label="YouTubeチャンネル">YouTube</a>
+      <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer"
+        aria-label="X（旧Twitter）プロフィール">X(Twitter)</a>
       <a href="#contact" class="contact-button" aria-label="お問い合わせフォーム">お問い合わせ</a>
     </nav>
   </header>
@@ -466,21 +527,22 @@
           </div>
           <div class="form-group">
             <label for="honeypot" class="visually-hidden">このフィールドは空のままにしてください</label>
-            <input type="text" id="honeypot" name="_gotcha" tabindex="-1" class="visually-hidden" aria-hidden="true" autocomplete="off" inputmode="none">
+            <input type="text" id="honeypot" name="_gotcha" tabindex="-1" class="visually-hidden" aria-hidden="true"
+              autocomplete="off" inputmode="none">
           </div>
           <button type="submit" class="submit-button">送信する</button>
         </form>
         <p class="contact-note">
-          X（旧Twitter）のDMからもお問い合わせいただけます: 
+          X（旧Twitter）のDMからもお問い合わせいただけます:
           <a href="https://x.com/_goromatsu" target="_blank" rel="noopener noreferrer">@_goromatsu</a>
         </p>
       </section>
     </div>
-    </div>
+  </div>
   </div>
   <script>
     // ヘッダー高さを実測してCSS変数へ反映（スマホでの被り防止）
-    (function() {
+    (function () {
       const root = document.documentElement;
       let rafId = null;
 
@@ -516,10 +578,10 @@
     })();
 
     // フォーム送信後の処理
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const contactForm = document.getElementById('contactForm');
       if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
+        contactForm.addEventListener('submit', async function (e) {
           e.preventDefault();
 
           const submitButton = contactForm.querySelector('button[type="submit"]');
@@ -555,7 +617,7 @@
                 'Accept': 'application/json'
               }
             });
-            
+
             if (response.ok) {
               // 送信成功時
               alert('お問い合わせが送信されました。\nご連絡ありがとうございます。\n内容を確認し、できるだけ早くご返信いたします。');
@@ -585,13 +647,13 @@
     });
 
     // プロジェクトカードの動画ホバー機能を初期化
-  document.addEventListener('DOMContentLoaded', async () => {
-    // 1) プロジェクトを読み込んで描画
-    const projectGrid = document.getElementById('projectGrid');
-    try {
-      const res = await fetch('project-list.json');
-      const projects = await res.json();
-      const html = projects.map(p => `
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1) プロジェクトを読み込んで描画
+      const projectGrid = document.getElementById('projectGrid');
+      try {
+        const res = await fetch('project-list.json');
+        const projects = await res.json();
+        const html = projects.map(p => `
         <a href="detail.html?id=${p.id}" class="project-link">
           <div class="project">
             <div class="media-container" tabindex="0">
@@ -609,65 +671,66 @@
           </div>
         </a>
       `).join('');
-      projectGrid.innerHTML = html;
-    } catch (e) {
-      console.error('プロジェクトの読み込みに失敗:', e);
-      projectGrid.innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
-    }
-  
-    // 2) ここで初期化（挿入後に1回）
-    const containers = document.querySelectorAll('.media-container');
-    containers.forEach(container => {
-      const video = container.querySelector('video');
-      const img   = container.querySelector('img');
-      if (!video || !img) return;
-    
-      // 再生/停止ヘルパ
-      const play = () => video.play().catch(()=>{ /* 自動再生ポリシー対策（muted指定済み）*/ });
-      const stop = () => { video.pause(); video.currentTime = 0; };
-    
-      // マウス
-      container.addEventListener('mouseenter', () => {
-        container.classList.add('playing');
-        if (video.paused) play();
-      });
-      container.addEventListener('mouseleave', () => {
-        stop();
-        container.classList.remove('playing');
-      });
-    
-      // キーボード（Tabで入ったら再生）
-      container.addEventListener('focusin', () => {
-        container.classList.add('playing');
-        play();
-      });
-      container.addEventListener('focusout', () => {
-        stop();
-        container.classList.remove('playing');
-      });
-    
-      // タッチ（hover無い環境向けトグル）
-      container.addEventListener('click', (e) => {
-        if (window.matchMedia('(hover: none)').matches) {
-          if (container.classList.contains('playing')) {
-            stop();
-            container.classList.remove('playing');
-          } else {
-            play();
-            container.classList.add('playing');
+        projectGrid.innerHTML = html;
+      } catch (e) {
+        console.error('プロジェクトの読み込みに失敗:', e);
+        projectGrid.innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
+      }
+
+      // 2) ここで初期化（挿入後に1回）
+      const containers = document.querySelectorAll('.media-container');
+      containers.forEach(container => {
+        const video = container.querySelector('video');
+        const img = container.querySelector('img');
+        if (!video || !img) return;
+
+        // 再生/停止ヘルパ
+        const play = () => video.play().catch(() => { /* 自動再生ポリシー対策（muted指定済み）*/ });
+        const stop = () => { video.pause(); video.currentTime = 0; };
+
+        // マウス
+        container.addEventListener('mouseenter', () => {
+          container.classList.add('playing');
+          if (video.paused) play();
+        });
+        container.addEventListener('mouseleave', () => {
+          stop();
+          container.classList.remove('playing');
+        });
+
+        // キーボード（Tabで入ったら再生）
+        container.addEventListener('focusin', () => {
+          container.classList.add('playing');
+          play();
+        });
+        container.addEventListener('focusout', () => {
+          stop();
+          container.classList.remove('playing');
+        });
+
+        // タッチ（hover無い環境向けトグル）
+        container.addEventListener('click', (e) => {
+          if (window.matchMedia('(hover: none)').matches) {
+            if (container.classList.contains('playing')) {
+              stop();
+              container.classList.remove('playing');
+            } else {
+              play();
+              container.classList.add('playing');
+            }
+            e.preventDefault();
           }
-          e.preventDefault();
-        }
-      });
-    
-      // 読み込み系はログ不要なら省略可
-      video.addEventListener('error', () => {
-        // 壊れたソースは画像でフォールバック
-        video.style.display = 'none';
-        img.style.opacity = '1';
+        });
+
+        // 読み込み系はログ不要なら省略可
+        video.addEventListener('error', () => {
+          // 壊れたソースは画像でフォールバック
+          video.style.display = 'none';
+          img.style.opacity = '1';
+        });
       });
     });
-  });
-</script>
+  </script>
 </body>
+
 </html>
