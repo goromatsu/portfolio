@@ -392,6 +392,112 @@
       text-decoration: underline;
     }
 
+    /* タブナビゲーション */
+    .tab-navigation {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #333;
+      padding: 0;
+    }
+
+    .tab-button {
+      background: none;
+      border: none;
+      color: var(--meta-text);
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s ease;
+      font-family: inherit;
+    }
+
+    .tab-button:hover {
+      color: var(--text-color);
+    }
+
+    .tab-button.active {
+      color: var(--primary-color);
+    }
+
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-color);
+    }
+
+    /* タブコンテンツ */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Steamページ用1カラムレイアウト */
+    .steam-project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .steam-project {
+      display: flex;
+      gap: 1.5rem;
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: var(--text-color);
+    }
+
+    .steam-project:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .steam-project-thumbnail {
+      flex-shrink: 0;
+      width: 300px;
+      height: 169px;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #1a1a1a;
+    }
+
+    .steam-project-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .steam-project-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .steam-project-content h2 {
+      color: var(--secondary-color);
+      margin: 0 0 0.75rem 0;
+      font-size: 1.3rem;
+    }
+
+    .steam-project-content p {
+      margin: 0;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
     /* レスポンシブデザイン */
     @media (max-width: 600px) {
 
@@ -467,6 +573,21 @@
         width: 100%;
         padding: 0.75rem;
       }
+
+      .steam-project {
+        flex-direction: column;
+      }
+
+      .steam-project-thumbnail {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      .tab-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -474,7 +595,6 @@
 <body>
   <header>
     <h1>Goromatsu</h1>
-    <div class="header-center">UEFN - GAMES</div>
     <nav class="links" aria-label="メインナビゲーション">
       <a href="https://www.fortnite.com/@goromatsu" target="_blank" rel="noopener noreferrer"
         aria-label="フォートナイトのプロフィール">Fortnite</a>
@@ -486,8 +606,24 @@
     </nav>
   </header>
   <div class="section">
-    <div class="project-grid" id="projectGrid">
-      <!-- プロジェクト一覧はJavaScriptで動的に読み込みます -->
+    <!-- タブナビゲーション -->
+    <div class="tab-navigation" role="tablist" aria-label="プロジェクトカテゴリ">
+      <button class="tab-button active" data-tab="steam" role="tab" aria-selected="true" aria-controls="steam-content" id="steam-tab">Steam</button>
+      <button class="tab-button" data-tab="uefn" role="tab" aria-selected="false" aria-controls="uefn-content" id="uefn-tab">UEFN</button>
+    </div>
+
+    <!-- Steamタブコンテンツ -->
+    <div class="tab-content active" id="steam-content" role="tabpanel" aria-labelledby="steam-tab">
+      <div class="steam-project-list" id="steamProjectList">
+        <!-- Steamプロジェクト一覧はJavaScriptで動的に読み込みます -->
+      </div>
+    </div>
+
+    <!-- UEFNタブコンテンツ -->
+    <div class="tab-content" id="uefn-content" role="tabpanel" aria-labelledby="uefn-tab">
+      <div class="project-grid" id="projectGrid">
+        <!-- プロジェクト一覧はJavaScriptで動的に読み込みます -->
+      </div>
     </div>
     <!-- 技術要素セクション -->
     <div class="section tech-section">
@@ -646,36 +782,176 @@
       }
     });
 
+    // タブ切り替え機能
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+
+          // すべてのタブボタンとコンテンツからactiveクラスを削除
+          tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+          });
+          tabContents.forEach(content => {
+            content.classList.remove('active');
+          });
+
+          // クリックされたタブをアクティブに
+          button.classList.add('active');
+          button.setAttribute('aria-selected', 'true');
+          document.getElementById(`${targetTab}-content`).classList.add('active');
+        });
+      });
+    });
+
+    // UEFNプロジェクトカードの動画ホバー機能を初期化
+    function initUEFNProjects() {
+      const projectGrid = document.getElementById('projectGrid');
+      if (!projectGrid) return;
+
+      // 既に初期化済みの場合はスキップ
+      if (projectGrid.dataset.initialized === 'true') return;
+
+      fetch('project-list.json')
+        .then(res => res.json())
+        .then(projects => {
+          const html = projects.map(p => `
+            <a href="detail.html?id=${p.id}" class="project-link">
+              <div class="project">
+                <div class="media-container" tabindex="0">
+                  <img src="${p.thumbnail}" alt="${p.title} サムネイル" loading="lazy">
+                  <video loop muted playsinline preload="metadata" width="100%" height="100%">
+                    <source src="${p.video}" type="video/mp4">
+                  </video>
+                </div>
+                <h2>${p.title}</h2>
+                <small>
+                  <span class="tools">${p.tools.join(' / ')}</span>
+                  <span class="duration">${p.duration}</span>
+                </small>
+                <p>${p.overview}</p>
+              </div>
+            </a>
+          `).join('');
+          projectGrid.innerHTML = html;
+          projectGrid.dataset.initialized = 'true';
+
+          // 動画ホバー機能を初期化
+          initVideoHover();
+        })
+        .catch(e => {
+          console.error('プロジェクトの読み込みに失敗:', e);
+          projectGrid.innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
+        });
+    }
+
+    // Steamプロジェクトを読み込んで表示
+    function initSteamProjects() {
+      const steamProjectList = document.getElementById('steamProjectList');
+      if (!steamProjectList) return;
+
+      // 既に初期化済みの場合はスキップ
+      if (steamProjectList.dataset.initialized === 'true') return;
+
+      fetch('steam-projects.json')
+        .then(res => res.json())
+        .then(projects => {
+          const html = projects.map(p => `
+            <a href="${p.storeUrl}" target="_blank" rel="noopener noreferrer" class="steam-project">
+              <div class="steam-project-thumbnail">
+                <img src="${p.thumbnail}" alt="${p.title} サムネイル" loading="lazy">
+              </div>
+              <div class="steam-project-content">
+                <h2>${p.title}</h2>
+                <p>${p.overview}</p>
+              </div>
+            </a>
+          `).join('');
+          steamProjectList.innerHTML = html;
+          steamProjectList.dataset.initialized = 'true';
+        })
+        .catch(e => {
+          console.error('Steamプロジェクトの読み込みに失敗:', e);
+          steamProjectList.innerHTML = '<p>Steamプロジェクトの読み込み中にエラーが発生しました。</p>';
+        });
+    }
+
+    // 動画ホバー機能の初期化
+    function initVideoHover() {
+      const containers = document.querySelectorAll('.media-container');
+      containers.forEach(container => {
+        const video = container.querySelector('video');
+        const img = container.querySelector('img');
+        if (!video || !img) return;
+
+        // 再生/停止ヘルパ
+        const play = () => video.play().catch(() => { /* 自動再生ポリシー対策（muted指定済み）*/ });
+        const stop = () => { video.pause(); video.currentTime = 0; };
+
+        // マウス
+        container.addEventListener('mouseenter', () => {
+          container.classList.add('playing');
+          if (video.paused) play();
+        });
+        container.addEventListener('mouseleave', () => {
+          stop();
+          container.classList.remove('playing');
+        });
+
+        // キーボード（Tabで入ったら再生）
+        container.addEventListener('focusin', () => {
+          container.classList.add('playing');
+          play();
+        });
+        container.addEventListener('focusout', () => {
+          stop();
+          container.classList.remove('playing');
+        });
+
+        // タッチ（hover無い環境向けトグル）
+        container.addEventListener('click', (e) => {
+          if (window.matchMedia('(hover: none)').matches) {
+            if (container.classList.contains('playing')) {
+              stop();
+              container.classList.remove('playing');
+            } else {
+              play();
+              container.classList.add('playing');
+            }
+            e.preventDefault();
+          }
+        });
+
+        // 読み込み系はログ不要なら省略可
+        video.addEventListener('error', () => {
+          // 壊れたソースは画像でフォールバック
+          video.style.display = 'none';
+          img.style.opacity = '1';
+        });
+      });
+    }
+
     // プロジェクトカードの動画ホバー機能を初期化
     document.addEventListener('DOMContentLoaded', async () => {
-      // 1) プロジェクトを読み込んで描画
-      const projectGrid = document.getElementById('projectGrid');
-      try {
-        const res = await fetch('project-list.json');
-        const projects = await res.json();
-        const html = projects.map(p => `
-        <a href="detail.html?id=${p.id}" class="project-link">
-          <div class="project">
-            <div class="media-container" tabindex="0">
-              <img src="${p.thumbnail}" alt="${p.title} サムネイル" loading="lazy">
-              <video loop muted playsinline preload="metadata" width="100%" height="100%">
-                <source src="${p.video}" type="video/mp4">
-              </video>
-            </div>
-            <h2>${p.title}</h2>
-            <small>
-              <span class="tools">${p.tools.join(' / ')}</span>
-              <span class="duration">${p.duration}</span>
-            </small>
-            <p>${p.overview}</p>
-          </div>
-        </a>
-      `).join('');
-        projectGrid.innerHTML = html;
-      } catch (e) {
-        console.error('プロジェクトの読み込みに失敗:', e);
-        projectGrid.innerHTML = '<p>プロジェクトの読み込み中にエラーが発生しました。</p>';
-      }
+      // 初期表示時はSteamタブを表示
+      initSteamProjects();
+
+      // タブ切り替え時にプロジェクトを読み込む
+      const tabButtons = document.querySelectorAll('.tab-button');
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+          if (targetTab === 'uefn') {
+            initUEFNProjects();
+          } else if (targetTab === 'steam') {
+            initSteamProjects();
+          }
+        });
+      });
 
       // 2) ここで初期化（挿入後に1回）
       const containers = document.querySelectorAll('.media-container');
