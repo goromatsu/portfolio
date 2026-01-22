@@ -152,33 +152,36 @@
 
     /* プロジェクトグリッド */
     .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
     .project {
       background: var(--card-bg);
-      padding: 1rem;
+      padding: 1.5rem;
       border-radius: 8px;
       display: flex;
-      flex-direction: column;
-      transition: transform 0.2s;
+      flex-direction: row;
+      gap: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: var(--text-color);
     }
 
     .project:hover {
       transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     /* メディアコンテナ */
     .media-container {
       position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      /* 16:9 アスペクト比 */
+      flex-shrink: 0;
+      width: 300px;
+      height: 169px;
       overflow: hidden;
       border-radius: 8px;
-      margin-bottom: 1rem;
       background-color: #1a1a1a;
     }
 
@@ -225,10 +228,16 @@
     }
 
     /* プロジェクト情報 */
+    .project-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
     .project h2 {
       color: var(--secondary-color);
-      margin: 0.75rem 0 0.5rem;
-      font-size: 1.2rem;
+      margin: 0 0 0.75rem 0;
+      font-size: 1.3rem;
     }
 
     .project small {
@@ -236,6 +245,7 @@
       font-size: 0.7rem;
       display: flex;
       gap: 0.5rem;
+      margin-bottom: 0.5rem;
     }
 
     .project small .tools::before {
@@ -247,10 +257,11 @@
     }
 
     .project p {
-      margin-top: 0.5rem;
+      margin: 0;
       font-size: 0.95rem;
       flex-grow: 1;
       color: var(--text-color);
+      line-height: 1.6;
     }
 
     /* 技術タグ */
@@ -506,8 +517,14 @@
         --header-height: 120px;
       }
 
-      .project-grid {
-        grid-template-columns: 1fr;
+      .project {
+        flex-direction: column;
+      }
+
+      .media-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
       }
 
       header {
@@ -828,12 +845,14 @@
                     <source src="${p.video}" type="video/mp4">
                   </video>
                 </div>
-                <h2>${p.title}</h2>
-                <small>
-                  <span class="tools">${p.tools.join(' / ')}</span>
-                  <span class="duration">${p.duration}</span>
-                </small>
-                <p>${p.overview}</p>
+                <div class="project-content">
+                  <h2>${p.title}</h2>
+                  <small>
+                    <span class="tools">${p.tools.join(' / ')}</span>
+                    <span class="duration">${p.duration}</span>
+                  </small>
+                  <p>${p.overview}</p>
+                </div>
               </div>
             </a>
           `).join('');
